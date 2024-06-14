@@ -86,7 +86,7 @@ function run_update()
 
     # Move the actual config stuff
     echo -e "${INFO}Copying config files...${RESET}"
-    source update-config.sh
+    source ~/config/scripts/update-config.sh
     echo -e "${SUCCESS}Configs copied!${RESET}"
 
     echo -e "${SUCCESS}Done!${RESET}"
