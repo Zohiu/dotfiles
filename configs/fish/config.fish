@@ -61,7 +61,7 @@ function copy
 end
 
 ## Aliases
-alias update='~/config/update-system.sh'
+alias update='~/config/update.sh'
 
 # Replace ls with exa
 alias ls='exa -a --color=always --group-directories-first --icons' # preferred listing

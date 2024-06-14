@@ -28,7 +28,7 @@ set $right Right
     floating_modifier $mod normal
 
     # Reload the configuration file
-    bindsym $mod+Shift+r exec bash -c "~/config/update-config.sh"
+    bindsym $mod+Shift+r exec bash -c "~/config/scripts/update-config.sh"
 
     # Screenshot
     bindsym $mod+Shift+s exec $screenshot
