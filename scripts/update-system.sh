@@ -12,13 +12,9 @@ function run_update()
 
     # Installation can take long on a slow internet connection.
     # I want to enter the password once and then have it run without asking again
-    echo -ne "${NO_FORMAT}Please enter your sudo password: ${RSET}"
-    read -s password
+    echo -ne "${NO_FORMAT}Press enter to continue ${RSET}"
+    read -s
     echo
-    
-    # Make sudo use password from variable
-    alias sudo="echo $password | sudo -s"
-    
 
     # Install paru if it doesn't exist yet
     if ! command -v paru --version &> /dev/null
@@ -36,7 +32,7 @@ function run_update()
 
     # Installation
     echo -e "${INFO}Installing packages...${RESET}"
-    echo $password | sudo -s paru -Syu --noconfirm --needed $packages_system $packages_gpu $packages_audio $packages_user $packages_desktop $packages_theme $packages_apps
+    paru -Syu --noconfirm --needed $packages_system $packages_gpu $packages_audio $packages_user $packages_desktop $packages_theme $packages_apps
     echo -e "${SUCCESS}Packages installed!${RESET}"
 
     # Setup git globals
@@ -48,7 +44,7 @@ function run_update()
 
     # Setup fish shell
     echo -e "${INFO}Setting up fish shell...${RESET}"
-    echo $password | sudo -s chsh -s /usr/bin/fish $USER
+    sudo chsh -s /usr/bin/fish $USER
     if ! fish -c "type omf > /dev/null"; then
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
         fish -c "omf install https://github.com/catppuccin/fish"
@@ -59,29 +55,39 @@ function run_update()
 
     # GTK themes
     echo -e "${INFO}Copying GTK themes...${RESET}"
-    echo $password | sudo -s cp -rd gtk-themes/. /usr/share/themes/
+    sudo cp -rd ~/config/gtk-themes/. /usr/share/themes/
     echo -e "${SUCCESS}GTK themes copied!${RESET}"
 
     # Fix dolphin MIME
     echo -e "${INFO}Setting up plasma-applications.menu for Dolphin...${RESET}"
-    echo $password | sudo -s ln -sf /etc/xdg/menus/plasma-applications.menu /etc/xdg/menus/applications.menu
+    sudo ln -sf /etc/xdg/menus/plasma-applications.menu /etc/xdg/menus/applications.menu
     kbuildsycoca6
     echo -e "${SUCCESS}plasma-applications.menu created!${RESET}"
 
+    # Setup sunshine game streaming
+    echo -e "${INFO}Setting up Sunshine server...${RESET}"
+    echo 'KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess"' | \
+    sudo tee /etc/udev/rules.d/60-sunshine.rules
+    sudo udevadm control --reload-rules
+    sudo udevadm trigger
+    sudo modprobe uinput
+    sudo setcap cap_sys_admin+p $(readlink -f $(which sunshine))
+    echo -e "${SUCCESS}Sunshine server set up.!${RESET}"
+
     # Setup autologin on tty1
     echo -e "${INFO}Enabling autologin on tty1...${RESET}"
-    echo $password | sudo -s systemctl set-default multi-user.target
-    echo $password | sudo -s systemctl enable getty@tty1
-    echo $password | sudo -s mkdir -p /etc/systemd/system/getty@tty1.service.d
+    sudo systemctl set-default multi-user.target
+    sudo systemctl enable getty@tty1
+    sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
     echo "[Service]
     ExecStart=
     ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin $USER %I \$TERM" | \
-    echo $password | sudo -s tee /etc/systemd/system/getty@tty1.service.d/autologin.conf > /dev/null
+    sudo tee /etc/systemd/system/getty@tty1.service.d/autologin.conf > /dev/null
     echo -e "${SUCCESS}Autologin enabled!${RESET}"
 
     # Disable account lock on incorrect password
     echo -e "${INFO}Disabling account locking on incorrect password attempts..."
-    echo "deny = 0" | echo $password | sudo -s tee gedit /etc/security/faillock.conf > /dev/null
+    echo "deny = 0" | sudo tee gedit /etc/security/faillock.conf > /dev/null
     echo -e "${SUCCESS}Faillock disabled!${RESET}"
 
     # Move the actual config stuff

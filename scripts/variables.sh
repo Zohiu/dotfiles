@@ -14,7 +14,7 @@ TITLE="\033[38;5;213m"
 packages_system="linux-headers fish man-db expac reflector find-the-command fzf eza bat hwinfo gvfs networkmanager v4l2loopback-dkms v4l-utils v4l2loopback-utils slurp"
 packages_gpu="xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau"
 packages_audio="pipewire pavucontrol wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-audio ffmpeg pamixer alsa-utils"
-packages_user="python-pip git neofetch neovim btop micro wine ffmpeg ffmpegthumbs ffmpegthumbnailer xclip pipewire-v4l2 flatpak radeontop"
+packages_user="python-pip git neofetch neovim btop micro wine ffmpeg ffmpegthumbs ffmpegthumbnailer xclip pipewire-v4l2 flatpak radeontop sunshine-bin"
 
 packages_desktop="qt6-wayland qt5-wayland xdg-desktop-portal xdg-desktop-portal-wlr polkit-gnome gnome-keyring swayfx wofi swaylock-effects grimshot mako nwg-launchers clipman wl-color-picker libnotify kservice wlrobs-hg brightnessctl light"
 packages_theme="lxappearance kvantum qt6ct ttf-font-awesome nerd-fonts noto-fonts-emoji"
