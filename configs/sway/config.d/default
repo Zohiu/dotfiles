@@ -1,0 +1,12 @@
+# Your preferred terminal emulators
+set $term kitty
+
+# apps
+set $menu wofi -I
+set $filemanager dolphin
+set $fullscreenmenu nwg-drawer
+set $powermenu nwgbar -f
+set $screenshot grimshot --notify copy area
+set $colorpicker wl-color-picker clipboard
+
+

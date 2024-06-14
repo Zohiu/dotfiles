@@ -1,0 +1,55 @@
+# Auth with polkit-gnome:
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec kwalletd6
+
+# Desktop notifications
+exec mako
+
+# Pipewire
+exec pipewire
+
+# GTK3 applications take a long time to start
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+     
+
+# nm-applet
+exec nm-applet --indicator
+
+# Clipman
+exec clipman restore
+exec wl-paste -t text --watch clipman store
+
+# Gnome Keyring
+exec gnome-keyring-daemon --daemonize --start --components=gpg,pkcs11,secrets,ssh
+
+# Xdg DEsktop Portal
+exec /usr/libexec/xdg-desktop-portal
+
+# waybar
+exec_always waybar --bar main-bar --log-level error
+
+# Mount drives
+exec {
+     mkdir -p /run/media/zohiu/D1-exfat/
+     mount -t exfat /dev/sda2 /run/media/zohiu/D1-exfat/
+
+     mkdir -p /run/media/zohiu/D2-ext4/
+     mount -t ext4 /dev/sdb1 /run/media/zohiu/D2-ext4/
+}
+
+# Wake on lan
+exec ethtool -s enp4s0 wol g
+
+# Update plasma app menu
+exec_always kbuildsycoca6
+
+# Apps
+exec {
+     nextcloud --background
+     steam -silent
+     armcord
+     vivaldi
+     kitty update
+}
