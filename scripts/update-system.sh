@@ -61,7 +61,7 @@ function run_update()
     # Fix dolphin MIME
     echo -e "${INFO}Setting up plasma-applications.menu for Dolphin...${RESET}"
     sudo ln -sf /etc/xdg/menus/plasma-applications.menu /etc/xdg/menus/applications.menu
-    kbuildsycoca6
+    kbuildsycoca6 --noincremental
     echo -e "${SUCCESS}plasma-applications.menu created!${RESET}"
 
     # Setup sunshine game streaming
@@ -87,8 +87,14 @@ function run_update()
 
     # Disable account lock on incorrect password
     echo -e "${INFO}Disabling account locking on incorrect password attempts..."
-    echo "deny = 0" | sudo tee gedit /etc/security/faillock.conf > /dev/null
+    echo "deny = 0" | sudo tee /etc/security/faillock.conf > /dev/null
     echo -e "${SUCCESS}Faillock disabled!${RESET}"
+
+    # Change waiting for stop job time
+    # echo -e "${INFO}Changing default stop job timeout..."
+    # echo "DefaultTimeoutStopSec=5s" | sudo tee /etc/systemd/system.conf > /dev/null
+    # echo -e "${SUCCESS}Default stop job timeout changed!${RESET}"
+    
 
     # Move the actual config stuff
     echo -e "${INFO}Copying config files...${RESET}"
