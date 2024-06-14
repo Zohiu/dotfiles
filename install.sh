@@ -3,10 +3,15 @@
 echo "Installing..."
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-mv $SCRIPT_DIR ~/config
-echo "Installed! Please remember to change ~/config/scripts/variables.sh to your needs."
+if [ $SCRIPT_DIR != ~/config ]; then
+    mv $SCRIPT_DIR ~/config
+fi
 
-source ~/config/scripts/update-config.sh
+sudo chmod +x ~/config/update.sh
+sudo chmod +x ~/config/scripts/*
+
+echo "Installed! Running update..."
+
+source ~/config/scripts/update-system.sh
 run_update
-
 

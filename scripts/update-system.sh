@@ -1,6 +1,7 @@
 function run_update()
 {
     trap handle_ctrlc SIGINT
+    source ~/config/scripts/variables.sh
 
     echo -e "${TITLE}Welcome to Zohiu's arch update script!${RESET}"
     if [ "$EUID" == "0" ]
