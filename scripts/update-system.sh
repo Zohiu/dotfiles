@@ -33,7 +33,17 @@ function run_update()
     # Installation
     echo -e "${INFO}Installing packages...${RESET}"
     paru -Syu --noconfirm --needed $packages_system $packages_gpu $packages_audio $packages_user $packages_desktop $packages_theme $packages_apps
+
+    # Flatpak
+    flatpak install -y flathub $packages_flatpak
     echo -e "${SUCCESS}Packages installed!${RESET}"
+
+    # PhotoGIMP
+    echo -e "${INFO}Setting up newest PhotoGIMP...${RESET}"
+    wget https://github.com/Diolinux/PhotoGIMP/releases/latest/download/PhotoGIMP.zip && unzip PhotoGIMP.zip
+    cp -rd PhotoGIMP-master/.var ~/ && cp -rd PhotoGIMP-master/.local ~/
+    rm PhotoGIMP.zip && rm -rd PhotoGIMP-master
+    echo -e "${SUCCESS}PhotoGIMP set up!${RESET}"
 
     # Setup git globals
     echo -e "${INFO}Setting git globals...${RESET}"
@@ -94,7 +104,6 @@ function run_update()
     # echo -e "${INFO}Changing default stop job timeout..."
     # echo "DefaultTimeoutStopSec=5s" | sudo tee /etc/systemd/system.conf > /dev/null
     # echo -e "${SUCCESS}Default stop job timeout changed!${RESET}"
-    
 
     # Move the actual config stuff
     echo -e "${INFO}Copying config files...${RESET}"
