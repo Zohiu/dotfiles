@@ -38,6 +38,6 @@ exec {
      steam -silent
      armcord
      vivaldi
-     kitty fish -c "update"
+     kitty fish -c "sleep 5 && update"
      sunshine
 }
