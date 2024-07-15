@@ -28,7 +28,7 @@ function run_update()
     # Installation
     echo -e "${INFO}Installing packages...${RESET}"
     paru -Syu --noconfirm --needed $packages_system $packages_gpu $packages_audio $packages_user $packages_desktop $packages_theme $packages_apps
-    sudo pacman -Rns (pacman -Qtdq)
+    sudo pacman -Rns $(pacman -Qtdq)
 
     # Flatpak
     flatpak install -y flathub $packages_flatpak
