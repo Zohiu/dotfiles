@@ -32,12 +32,16 @@ exec ethtool -s enp4s0 wol g
 # Update plasma app menu
 exec_always kbuildsycoca6
 
-# Apps
+# Background
 exec {
      nextcloud --background
      steam -silent
+     sunshine
+}
+
+# Foreground
+exec {
+     kitty --title Update fish -c "clear && echo 'Waiting for network...' && sleep 5 && update"
      armcord
      vivaldi
-     kitty fish -c "sleep 5 && update"
-     sunshine
 }

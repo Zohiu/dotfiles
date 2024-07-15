@@ -9,3 +9,6 @@ cd $start_dir
 
 source ~/config/scripts/update-system.sh
 run_update
+echo -ne "${NO_FORMAT}Press enter to close ${RSET}"
+read -s
+echo

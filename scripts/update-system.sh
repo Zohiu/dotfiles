@@ -10,11 +10,6 @@ function run_update()
 
     source ~/config/scripts/variables.sh
 
-    # Installation can take long on a slow internet connection.
-    # I want to enter the password once and then have it run without asking again
-    echo -ne "${NO_FORMAT}Press enter to continue ${RSET}"
-    read -s
-    echo
 
     # Install paru if it doesn't exist yet
     if ! command -v paru --version &> /dev/null
@@ -33,14 +28,16 @@ function run_update()
     # Installation
     echo -e "${INFO}Installing packages...${RESET}"
     paru -Syu --noconfirm --needed $packages_system $packages_gpu $packages_audio $packages_user $packages_desktop $packages_theme $packages_apps
+    sudo pacman -Rns (pacman -Qtdq)
 
     # Flatpak
     flatpak install -y flathub $packages_flatpak
+    flatpak update -y
     echo -e "${SUCCESS}Packages installed!${RESET}"
 
     # PhotoGIMP
     echo -e "${INFO}Setting up newest PhotoGIMP...${RESET}"
-    wget https://github.com/Diolinux/PhotoGIMP/releases/latest/download/PhotoGIMP.zip && unzip PhotoGIMP.zip
+    wget -q --show-progress https://github.com/Diolinux/PhotoGIMP/releases/latest/download/PhotoGIMP.zip && unzip -q PhotoGIMP.zip
     cp -rd PhotoGIMP-master/.var ~/ && cp -rd PhotoGIMP-master/.local ~/
     rm PhotoGIMP.zip && rm -rd PhotoGIMP-master
     echo -e "${SUCCESS}PhotoGIMP set up!${RESET}"
@@ -84,6 +81,23 @@ function run_update()
     sudo setcap cap_sys_admin+p $(readlink -f $(which sunshine))
     echo -e "${SUCCESS}Sunshine server set up.!${RESET}"
 
+    # Setup yabridge VST
+    echo -e "${INFO}Setting up yabridge...${RESET}"
+    yabridgectl add "/home/$USER/.vst"
+    yabridgectl sync --prune
+    echo -e "${SUCCESS}yabridge server set up.!${RESET}"
+    
+    # Setup printing server
+    echo -e "${INFO}Setting up print server...${RESET}"
+    sudo systemctl enable --now cups
+    sudo systemctl enable --now cups-browsed
+    echo -e "${SUCCESS}print server set up.!${RESET}"
+    
+    # Setup VMWare network bridge
+    echo -e "${INFO}Setting up VMWare networking...${RESET}"
+    sudo systemctl enable --now vmware-networks.service
+    echo -e "${SUCCESS}VMWare networking server set up.!${RESET}"
+    
     # Setup autologin on tty1
     echo -e "${INFO}Enabling autologin on tty1...${RESET}"
     sudo systemctl set-default multi-user.target
@@ -101,9 +115,9 @@ function run_update()
     echo -e "${SUCCESS}Faillock disabled!${RESET}"
 
     # Change waiting for stop job time
-    # echo -e "${INFO}Changing default stop job timeout..."
-    # echo "DefaultTimeoutStopSec=5s" | sudo tee /etc/systemd/system.conf > /dev/null
-    # echo -e "${SUCCESS}Default stop job timeout changed!${RESET}"
+    echo -e "${INFO}Changing default stop job timeout..."
+    echo "DefaultTimeoutStopSec=5s" | sudo tee /etc/systemd/system.conf > /dev/null
+    echo -e "${SUCCESS}Default stop job timeout changed!${RESET}"
 
     # Move the actual config stuff
     echo -e "${INFO}Copying config files...${RESET}"
