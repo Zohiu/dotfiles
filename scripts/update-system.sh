@@ -28,7 +28,7 @@ function run_update()
     # Installation
     echo -e "${INFO}Installing packages...${RESET}"
     paru -Syu --noconfirm --needed $packages_system $packages_gpu $packages_audio $packages_user $packages_desktop $packages_theme $packages_apps
-    sudo pacman -Rns $(pacman -Qtdq)
+    sudo pacman -Rns --noconfirm $(pacman -Qtdq)
 
     # Flatpak
     flatpak install -y flathub $packages_flatpak
@@ -93,6 +93,11 @@ function run_update()
     sudo systemctl enable --now cups-browsed
     echo -e "${SUCCESS}print server set up.!${RESET}"
     
+    # Services
+    sudo systemctl enable --now xboxdrv
+    sudo systemctl enable --now bluetooth
+    sudo systemctl enable --now joycond
+    
     # Setup VMWare network bridge
     echo -e "${INFO}Setting up VMWare networking...${RESET}"
     sudo systemctl enable --now vmware-networks.service
@@ -118,6 +123,9 @@ function run_update()
     echo -e "${INFO}Changing default stop job timeout..."
     echo "DefaultTimeoutStopSec=5s" | sudo tee /etc/systemd/system.conf > /dev/null
     echo -e "${SUCCESS}Default stop job timeout changed!${RESET}"
+
+    # Setup dolphin
+    # https://wiki.dolphin-emu.org/index.php?title=Bluetooth_Passthrough#%22Failed_to_open_Bluetooth_device:_LIBUSB_ERROR_ACCESS%22
 
     # Move the actual config stuff
     echo -e "${INFO}Copying config files...${RESET}"
