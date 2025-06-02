@@ -6,6 +6,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     # Framework stuff
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -15,7 +16,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, fw-fanctrl, ... }:
+  outputs = { self, nixpkgs, home-manager, nix-flatpak, nixos-hardware, fw-fanctrl, ... }:
     let
       systems = [ "x86_64-linux" ];
       forEachSystem = f: builtins.listToAttrs (map (system: {
@@ -31,9 +32,11 @@
 
             home-manager.nixosModules.home-manager
             {
-              # home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.samy = import ./home/home.nix;
+              home-manager.users.samy.imports = [
+                nix-flatpak.homeManagerModules.nix-flatpak
+                ./home/home.nix
+              ];
             }
           ];
         };
@@ -47,9 +50,11 @@
 
             home-manager.nixosModules.home-manager
             {
-              # home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.samy = import ./home/home.nix;
+               home-manager.users.samy.imports = [
+                nix-flatpak.homeManagerModules.nix-flatpak
+                ./home/home.nix
+              ];
             }
           ];
         };

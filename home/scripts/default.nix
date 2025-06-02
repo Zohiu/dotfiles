@@ -2,9 +2,6 @@
 let
 
 rebuild = pkgs.writeShellScriptBin "rebuild" ''
-cd ~/dotfiles
-git pull --rebase
-
 sudo nixos-rebuild $1 --flake ~/dotfiles#$(hostname)
 '';
 

@@ -11,7 +11,22 @@
     homeDirectory = "/home/samy";
   };
 
+  services.flatpak.remotes = [{
+    name = "flathub";
+    location = "https://flathub.org/repo/flathub.flatpakrepo";
+  }];
+
+  services.flatpak.update.auto.enable = false;
+  services.flatpak.uninstallUnmanaged = false;
+
   nixpkgs.config.allowUnfree = true;
+
+  services.flatpak.packages = [
+    "com.bktus.gpgfrontend"
+    "org.prismlauncher.PrismLauncher"
+    "io.github.MakovWait.Godots"
+    "com.github.tchx84.Flatseal"
+  ];
 
   # Also need to rebuild nix to fix dolphin MIME
   home.packages = (with pkgs; [
@@ -53,7 +68,6 @@
     # Command line utils
     fish
     wlr-randr
-    git
     nitch
     neofetch
     wget
@@ -66,13 +80,25 @@
     (python312.withPackages (p: with p; [
       build
     ]))
+    gnupg
+    pinentry
 
     # TUI apps
     micro
     nano
     btop
-
   ]);
+
+  programs.git = {
+    enable = true;
+    userName  = "Zohiu";
+    userEmail = "mail@zohiu.de";
+    extraConfig = {
+      credential.helper = "${
+          pkgs.git.override { withLibsecret = true; }
+        }/bin/git-credential-libsecret";
+    };
+  };
 
   programs.home-manager.enable = true;
   home.stateVersion = "24.11";
