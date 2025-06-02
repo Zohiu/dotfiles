@@ -4,7 +4,7 @@ home.packages = with pkgs; [
     rofi-wayland
 ];
 
-home.file.".config/rofi" = {
+xdg.configFile."rofi" = {
     source = ./config;
     recursive = true;
 };

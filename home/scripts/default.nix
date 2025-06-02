@@ -5,13 +5,6 @@ rebuild = pkgs.writeShellScriptBin "rebuild" ''
 sudo nixos-rebuild $1 --flake ~/dotfiles#$(hostname)
 '';
 
-homecfg = pkgs.writeShellScriptBin "homecfg" ''
-micro ~/.config/home-manager/home.nix
-'';
-
-syscfg = pkgs.writeShellScriptBin "syscfg" ''
-micro /etc/nixos/configuration.nix
-'';
 
 search = pkgs.writeShellScriptBin "search" ''
 nix search nixpkgs $1
@@ -22,7 +15,7 @@ cava-internal = pkgs.writeShellScriptBin "cava-internal" ''
 '';
 
 wallpaper_random = pkgs.writeShellScriptBin "wallpaper_random" ''
-bash -c "swww img $(find ~/.config/home-manager/wallpapers/ -type f | shuf -n 1)"
+bash -c "swww img $(find ~/dotfiles/home/wallpapers/ -type f | shuf -n 1)"
 '';
 
 fixbrightness = pkgs.writeShellScriptBin "fixbrightness" ''
@@ -62,8 +55,6 @@ in
 {
   home.packages = with pkgs; [
     rebuild
-    homecfg
-    syscfg
     search
     cava-internal
     wallpaper_random

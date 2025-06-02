@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  home.file.".config/kitty/kitty.conf".text = ''
+  xdg.configFile."kitty/kitty.conf".text = ''
 # vim:ft=kitty
 
 shell fish

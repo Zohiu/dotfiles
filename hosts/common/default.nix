@@ -59,6 +59,9 @@
       enable = true;
       xwayland.enable = true;
   };
+  services.gnome.gnome-keyring.enable = true;
+  programs.dconf.enable = true;
+
   # Fix blurry electron apps
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 

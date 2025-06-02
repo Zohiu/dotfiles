@@ -115,7 +115,7 @@ dconf.settings = {
     };
 };
 
-home.file.".config/hypr" = {
+xdg.configFile."hypr" = {
     source = ./config;
     recursive = true;
 };

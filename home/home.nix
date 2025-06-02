@@ -87,6 +87,9 @@
     micro
     nano
     btop
+
+    # Libs / Requirements
+
   ]);
 
   programs.git = {

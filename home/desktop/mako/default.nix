@@ -9,7 +9,7 @@ services.mako = {
     enable = true;
 };
 
-home.file.".config/mako" = {
+xdg.configFile."mako" = {
     source = ./config;
     recursive = true;
 };
