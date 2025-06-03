@@ -1,16 +1,4 @@
 { pkgs, lib, inputs, ... }:
-let
-    hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
-
-    terminal = "kitty";
-    fileManager = "dolphin";
-    menu = "rofi -theme theme -show drun";
-    power_menu = "rofi -theme theme -show power-menu -modi power-menu:~/.config/rofi/rofi-power-menu";
-    screenshot = "grim -g \"$(slurp -d)\" - | wl-copy";
-    stylixImage = "/path/to/your/image";
-    keyboardLayout = "de";
-    mainMod = "SUPER";
-in
 {
 
 # Takes inputs from flake.nix!
@@ -29,6 +17,7 @@ wayland.windowManager.hyprland = {
   settings = {
     exec-once = [
       "sunshine"
+      "plasma-apply-colorscheme CatppuccinMochaMauve"
       "hyprctl setcursor Bibata-Modern-Classic 24"
       "dunst"
       "easyeffects --gapplication-service"
@@ -193,7 +182,6 @@ wayland.windowManager.hyprland = {
 };
 
 
-
 home.packages = with pkgs; [
     # hyprland_load_plugins
 
@@ -229,9 +217,6 @@ qt = {
     platformTheme.name = "kde";
 };
 
-#home.activation.qt-theme = lib.hm.dag.entryAfter ["writeBoundary"] #''
-#    run ${pkgs.libsForQt5.plasma-workspace}/bin/plasma-apply-#colorscheme CatppuccinMochaMauve
-#'';
 
 xdg.mimeApps = {
     enable = true;
@@ -302,9 +287,4 @@ xdg.configFile."hypr" = {
     recursive = true;
 };
 
-#wayland.windowManager.hyprland = {
-#    enable = true;
-#    systemd.enable = true;
-#    extraConfig = "";
-#};
 }
