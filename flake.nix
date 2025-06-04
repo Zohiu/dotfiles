@@ -22,6 +22,10 @@
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
     };
+    hypr-dynamic-cursors = {
+        url = "github:VirtCode/hypr-dynamic-cursors";
+        inputs.hyprland.follows = "hyprland";
+    };
 
     # Framework stuff
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";

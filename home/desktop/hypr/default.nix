@@ -12,6 +12,7 @@ wayland.windowManager.hyprland = {
   plugins = [
     inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
     inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
+    inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
   ];
 
   settings = {
@@ -98,6 +99,16 @@ wayland.windowManager.hyprland = {
         keep_focused = false;
         enable_notifications = false;
         enable_persistent_workspaces = false;
+      };
+      "dynamic-cursors" = {
+        enabled = true;
+        mode = "tilt";
+        tilt = {
+          limit = 7500;
+        };
+        shake = {
+          enabled = true;
+        };
       };
     };
 

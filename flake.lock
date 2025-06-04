@@ -130,6 +130,27 @@
         "type": "github"
       }
     },
+    "hypr-dynamic-cursors": {
+      "inputs": {
+        "hyprland": [
+          "hyprland"
+        ],
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1748038505,
+        "narHash": "sha256-7L2MRMB2ONEh7wlgQzraEoA+0o88EOV87KNqZg7vpHA=",
+        "owner": "VirtCode",
+        "repo": "hypr-dynamic-cursors",
+        "rev": "761acf0e602e0f6549e5e6c0289a0402e6073489",
+        "type": "github"
+      },
+      "original": {
+        "owner": "VirtCode",
+        "repo": "hypr-dynamic-cursors",
+        "type": "github"
+      }
+    },
     "hyprcursor": {
       "inputs": {
         "hyprlang": [
@@ -198,7 +219,7 @@
         "hyprlang": "hyprlang",
         "hyprutils": "hyprutils",
         "hyprwayland-scanner": "hyprwayland-scanner",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "pre-commit-hooks": "pre-commit-hooks",
         "systems": "systems",
         "xdph": "xdph"
@@ -467,6 +488,22 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1737469691,
+        "narHash": "sha256-nmKOgAU48S41dTPIXAq0AHZSehWUn6ZPrUKijHAMmIk=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "9e4d5190a9482a1fb9d18adf0bdb83c6e506eaab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1748460289,
         "narHash": "sha256-7doLyJBzCllvqX4gszYtmZUToxKvMUrg45EUWaUYmBg=",
         "owner": "NixOS",
@@ -481,7 +518,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1748708770,
         "narHash": "sha256-q8jG2HJWgooWa9H0iatZqBPF3bp0504e05MevFmnFLY=",
@@ -524,11 +561,12 @@
       "inputs": {
         "fw-fanctrl": "fw-fanctrl",
         "home-manager": "home-manager",
+        "hypr-dynamic-cursors": "hypr-dynamic-cursors",
         "hyprland": "hyprland",
         "hyprland-plugins": "hyprland-plugins",
         "nix-flatpak": "nix-flatpak",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "split-monitor-workspaces": "split-monitor-workspaces"
       }
     },
