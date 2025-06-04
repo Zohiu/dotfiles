@@ -9,13 +9,13 @@
   fileSystems."/mnt/data" = {
     device = "100.96.28.102:/mnt/main/data";
     fsType = "nfs";
-    options = [ "noauto" "x-systemd.automount" "x-systemd.mount-timeout=20" "hard" "rw" "async" "nfsvers=4.2" "_netdev" "x-systemd.requires=tailscaled.service" ];
+    options = [ "noauto" "x-systemd.automount" "x-systemd.mount-timeout=60" "hard" "rw" "async" "nfsvers=4.2" "_netdev" "x-systemd.requires=tailscaled.service" ];
   };
 
-  fileSystems."/mnt/games/PrismLauncher" = {
-    device = "100.96.28.102:/mnt/main/games/PrismLauncher";
+  fileSystems."/mnt/games" = {
+    device = "100.96.28.102:/mnt/main/games";
     fsType = "nfs";
-    options = [ "noauto" "x-systemd.automount" "x-systemd.mount-timeout=20" "hard" "rw" "async" "nfsvers=4.2" "_netdev" "x-systemd.requires=tailscaled.service" ];
+    options = [ "noauto" "x-systemd.automount" "x-systemd.mount-timeout=60" "hard" "rw" "async" "nfsvers=4.2" "_netdev" "x-systemd.requires=tailscaled.service" ];
   };
 
 
