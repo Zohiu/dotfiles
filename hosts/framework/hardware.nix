@@ -12,7 +12,10 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  boot.kernelParams = [ "mem_sleep_default=deep" ];
+  boot.kernelParams = [ "mem_sleep_default=deep" "nohz=on" "pcie_aspm=force" ];
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{power/control}="auto"
+  '';
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/a69ac279-9514-42da-b6a5-ab0e2a5be95a";

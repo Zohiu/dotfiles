@@ -34,7 +34,7 @@ for device in $backlight_class*; do
     fi
 done
 
-actual_brightness=$(cat $backlight_device/actual_brightness)
+actual_brightness=$(cat $backlight_device/brightness)
 max_brightness=$(cat $backlight_device/max_brightness)
 brightness=$backlight_device/brightness
 

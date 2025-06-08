@@ -25,11 +25,13 @@
   '';
 
   # Latptop adjustments
+  services.cpupower-gui.enable = true;
+  powerManagement.cpuFreqGovernor = "schedutil";
   services.power-profiles-daemon.enable = false;  # Conflicts with tlp
   powerManagement.powertop.enable = true;
   services.thermald.enable = true;
   services.tlp = {
-      enable = false;  # Not recommended for framework
+      enable = false;
       settings = {
         CPU_SCALING_GOVERNOR_ON_AC = "performance";
         CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
@@ -43,8 +45,8 @@
         CPU_MAX_PERF_ON_BAT = 20;
 
        #Optional helps save long term battery health
-       START_CHARGE_THRESH_BAT0 = 80; # 40 and below it starts to charge
-       STOP_CHARGE_THRESH_BAT0 = 95; # 80 and above it stops charging
+       START_CHARGE_THRESH_BAT0 = 80;
+       STOP_CHARGE_THRESH_BAT0 = 95;
 
       };
   };
@@ -73,8 +75,8 @@
         fanSpeedUpdateFrequency = 5;
         movingAverageInterval = 30;
         speedCurve = [
-          { temp = 0; speed = 15; }
-          { temp = 50; speed = 15; }
+          { temp = 0; speed = 0; }
+          { temp = 40; speed = 15; }
           { temp = 65; speed = 25; }
           { temp = 70; speed = 35; }
           { temp = 75; speed = 50; }

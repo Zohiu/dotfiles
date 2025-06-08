@@ -10,9 +10,7 @@ wayland.windowManager.hyprland = {
   systemd.enable = true;
 
   plugins = [
-    inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
     inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
-    inputs.hypr-dynamic-cursors.packages.${pkgs.system}.hypr-dynamic-cursors
   ];
 
   settings = {
@@ -66,6 +64,12 @@ wayland.windowManager.hyprland = {
 
     decoration = {
       rounding = 10;
+      blur = {
+        enabled = false;
+      };
+      shadow = {
+        enabled = false;
+      };
     };
 
     animations = {
@@ -82,6 +86,10 @@ wayland.windowManager.hyprland = {
             "fade,1,3,ease"
             "workspaces,1,3.5,ease,slidefade"
         ];
+    };
+
+    misc = {
+      vfr = true;  # Lower framerate when no movement.
     };
 
     dwindle = {

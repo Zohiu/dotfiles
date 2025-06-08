@@ -65,6 +65,7 @@
 
     jellyfin-media-player
     gnome-network-displays
+    inkscape
 
     jetbrains.pycharm-community-bin
     jetbrains.idea-community-bin
