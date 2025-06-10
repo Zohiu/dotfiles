@@ -48,7 +48,8 @@
     libsForQt5.kate
     moonlight-qt
     gimp
-    libreoffice-fresh
+    # fuck libreoffice
+    # libreoffice-fresh
     obs-studio
     obsidian
     signal-desktop

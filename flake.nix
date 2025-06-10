@@ -42,7 +42,7 @@
     in {
       nixosConfigurations = {
         crystal = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs;};
+          specialArgs = {inherit inputs; inherit home-manager;};
           modules = [
             ./hosts/crystal
             home-manager.nixosModules.home-manager
@@ -62,7 +62,7 @@
         };
 
         shard = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs;};
+          specialArgs = {inherit inputs; inherit home-manager;};
           modules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
             fw-fanctrl.nixosModules.default

@@ -4,6 +4,7 @@
   imports = [
     ./hardware.nix
     ../common
+    ../amd.nix
   ];
 
   networking.hostName = "shard";
@@ -85,4 +86,17 @@
       };
     };
   };
+
+  # Home Manager overrides
+  home-manager.users.samy.wayland.windowManager.hyprland.settings = {
+    exec = [
+      "fixbrightness"
+    ];
+
+    monitor = [
+      ", preferred, auto, auto"
+    ];
+  };
+
+  system.stateVersion = "24.11";
 }
