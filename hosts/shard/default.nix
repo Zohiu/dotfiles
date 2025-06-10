@@ -6,7 +6,7 @@
     ../common
   ];
 
-  networking.hostName = "framework";
+  networking.hostName = "shard";
 
   hardware.framework.enableKmod = true;
   services.fwupd.enable = true;

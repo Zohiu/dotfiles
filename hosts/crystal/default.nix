@@ -7,5 +7,5 @@
     ../common
   ];
 
-  networking.hostName = "zohiupc";
+  networking.hostName = "crystal";
 }

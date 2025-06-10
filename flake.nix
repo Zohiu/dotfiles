@@ -41,10 +41,10 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in {
       nixosConfigurations = {
-        zohiupc = nixpkgs.lib.nixosSystem {
+        crystal = nixpkgs.lib.nixosSystem {
           specialArgs = {inherit inputs;};
           modules = [
-            ./hosts/zohiupc
+            ./hosts/crystal
             home-manager.nixosModules.home-manager
 
             {
@@ -61,13 +61,13 @@
           ];
         };
 
-        framework = nixpkgs.lib.nixosSystem {
+        shard = nixpkgs.lib.nixosSystem {
           specialArgs = {inherit inputs;};
           modules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
             fw-fanctrl.nixosModules.default
             home-manager.nixosModules.home-manager
-            ./hosts/framework
+            ./hosts/shard
 
             {
               home-manager.extraSpecialArgs = {inherit inputs;};
