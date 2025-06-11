@@ -59,6 +59,7 @@ in
 {
   home.packages = with pkgs; [
     rebuild
+    remount_force_all
     search
     cava-internal
     wallpaper_random
