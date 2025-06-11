@@ -5,6 +5,10 @@ rebuild = pkgs.writeShellScriptBin "rebuild" ''
 sudo nixos-rebuild $1 --flake ~/dotfiles#$(hostname)
 '';
 
+remount_force_all = pkgs.writeShellScriptBin "remount_force_all" ''
+sudo umount -l /mnt/*
+rebuild test
+'';
 
 search = pkgs.writeShellScriptBin "search" ''
 nix search nixpkgs $1
