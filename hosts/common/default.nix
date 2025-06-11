@@ -95,6 +95,7 @@
     enable = true;
     openDefaultPorts = true;
     user = "samy";
+    group = "users";
     dataDir = "/home/samy";
     configDir = "/home/samy/.config/syncthing";
   };
