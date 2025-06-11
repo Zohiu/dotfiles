@@ -25,6 +25,8 @@
     HandleHibernateKey=ignore
   '';
 
+  services.fprintd.enable = true;
+
   # Latptop adjustments
   services.cpupower-gui.enable = true;
   powerManagement.cpuFreqGovernor = "schedutil";

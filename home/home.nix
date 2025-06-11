@@ -4,6 +4,7 @@
     ./programs
     ./scripts
     ./desktop
+    ./vr.nix
   ];
 
   home = {
@@ -27,6 +28,10 @@
     "io.github.MakovWait.Godots"
     "com.github.tchx84.Flatseal"
   ];
+
+  # BSManager:
+  # sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  # sudo flatpak install BSManager-1.5.3-x86_64.flatpak
 
   # Also need to rebuild nix to fix dolphin MIME
   home.packages = (with pkgs; [
@@ -64,6 +69,9 @@
     audacity
     qpwgraph
 
+    # Beat saber
+    bs-manager
+
     jellyfin-media-player
     gnome-network-displays
     inkscape
@@ -95,7 +103,7 @@
     btop
 
     # Libs / Requirements
-
+    kdePackages.kservice
   ]);
 
   programs.git = {

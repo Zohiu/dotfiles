@@ -21,6 +21,7 @@ wayland.windowManager.hyprland = {
       "easyeffects --gapplication-service"
       "swww init && exec wallpaper_random"
       "while true; do sleep 300; wallpaper_random; done"
+      # "wl-paste -p -t text --watch clipman store -P"
     ];
 
     exec = [
@@ -194,7 +195,7 @@ wayland.windowManager.hyprland = {
   };
 };
 
-
+services.clipman.enable = true;
 home.packages = with pkgs; [
     xdg-desktop-portal
     grim
@@ -363,16 +364,51 @@ qt = {
 xdg.mimeApps = {
     enable = true;
     defaultApplications = {
+        # Web Browse
         "default-web-browser" = [ "firefox.desktop" ];
         "x-scheme-handler/http" = [ "firefox.desktop" ];
         "x-scheme-handler/https" = [ "firefox.desktop" ];
         "x-scheme-handler/about" = [ "firefox.desktop" ];
         "x-scheme-handler/unknown" = [ "firefox.desktop" ];
 
+        # Directories
+        "inode/directory" = [ "dolphin.desktop" ];
+
+        # Text Files
         "text/plain" = [ "kate.desktop" ];
         "text/html" = [ "firefox.desktop" ];
+
+        # Images
+        "image/jpeg" = [ "gwenview.desktop" ];
+        "image/png" = [ "gwenview.desktop" ];
+        "image/gif" = [ "gwenview.desktop" ];
+        "image/bmp" = [ "gwenview.desktop" ];
+        "image/svg+xml" = [ "gwenview.desktop" ];
+        "image/webp" = [ "gwenview.desktop" ];
+
+        # Video
+        "video/mp4" = [ "mpv.desktop" ];
+        "video/x-matroska" = [ "mpv.desktop" ];
+        "video/webm" = [ "mpv.desktop" ];
+        "video/avi" = [ "mpv.desktop" ];
+        "video/x-flv" = [ "mpv.desktop" ];
+
+        # Audio
+        "audio/mpeg" = [ "mpv.desktop" ];
+        "audio/ogg" = [ "mpv.desktop" ];
+        "audio/flac" = [ "mpv.desktop" ];
+        "audio/wav" = [ "mpv.desktop" ];
+
+        # Archives
+        "application/zip" = [ "ark.desktop" ];
+        "application/x-tar" = [ "ark.desktop" ];
+        "application/x-gzip" = [ "ark.desktop" ];
+        "application/x-bzip2" = [ "ark.desktop" ];
+        "application/x-xz" = [ "ark.desktop" ];
+        "application/x-7z-compressed" = [ "ark.desktop" ];
     };
 };
+
 
 home = {
     sessionVariables = {

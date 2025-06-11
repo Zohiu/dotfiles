@@ -72,12 +72,18 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Services
-  services.fprintd.enable = true;
   services.sunshine = {
     enable = false;
     autoStart = true;
     capSysAdmin = true;
     openFirewall = true;
+  };
+
+  # VR streaming
+  services.wivrn.enable = true;
+  programs.envision = {
+    enable = true;
+    openFirewall = true; # This is set true by default
   };
 
   services.flatpak.enable = true;
