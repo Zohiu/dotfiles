@@ -53,6 +53,7 @@
     libsForQt5.kate
     moonlight-qt
     gimp
+    discord
     # fuck libreoffice
     # libreoffice-fresh
     obs-studio
