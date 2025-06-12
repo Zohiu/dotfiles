@@ -42,7 +42,6 @@
     nemo-with-extensions
     firefox
     chromium
-    alvr
     bitwarden-desktop
 
     libsForQt5.dolphin

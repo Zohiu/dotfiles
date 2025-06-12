@@ -21,7 +21,7 @@ wayland.windowManager.hyprland = {
       "easyeffects --gapplication-service"
       "swww init && exec wallpaper_random"
       "while true; do sleep 300; wallpaper_random; done"
-      # "wl-paste -p -t text --watch clipman store -P"
+      "wl-paste -t text --watch clipman store --no-persist"
     ];
 
     exec = [
