@@ -45,6 +45,8 @@
     bitwarden-desktop
     qbittorrent
 
+    wineWowPackages.stable
+
     libsForQt5.dolphin
 
     libsForQt5.ark
