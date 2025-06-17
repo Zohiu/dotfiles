@@ -43,10 +43,9 @@
     firefox
     chromium
     bitwarden-desktop
+    qbittorrent
 
     libsForQt5.dolphin
-    libsForQt5.kio-extras
-    libsForQt5.ffmpegthumbs
 
     libsForQt5.ark
     libsForQt5.kate

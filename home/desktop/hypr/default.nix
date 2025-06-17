@@ -338,6 +338,10 @@ ForegroundNormal=205, 214, 244
 ForegroundPositive=166, 227, 161
 ForegroundVisited=203, 166, 247
 
+[General]
+TerminalApplication=kitty
+TerminalService=kitty.desktop
+
 [KDE]
 ShowDeleteCommand=true
 SingleClick=false

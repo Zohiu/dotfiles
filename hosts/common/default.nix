@@ -106,8 +106,15 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
+  # Make unmounted disks appear in dolphin
+  services.udisks2.enable = true;
+
   # Additional packages (nix search <pkg>)
   environment.systemPackages = with pkgs; [
+    libsForQt5.qtsvg
+    kdePackages.kio-fuse
+    libsForQt5.kio-extras
+    libsForQt5.ffmpegthumbs
   ];
 
   # Fonts
