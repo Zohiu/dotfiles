@@ -22,6 +22,7 @@ wayland.windowManager.hyprland = {
       "swww init && exec wallpaper_random"
       "while true; do sleep 300; wallpaper_random; done"
       "wl-paste -t text --watch clipman store --no-persist"
+      "systemctl --user start hyprpolkitagent"
     ];
 
     exec = [
