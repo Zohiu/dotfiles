@@ -1,34 +1,41 @@
- 
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  hyprland,
+  nix-flatpak,
+  ...
+}:
 
 {
   imports = [
-    ./hardware.nix
+    ./filesystems.nix
+    ./networking.nix
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Kernel modules
   boot.kernelModules = [ "v4l2loopback" ];
   boot.extraModulePackages = [ pkgs.linuxPackages.v4l2loopback ];
 
-  # Bootloader.
+  # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Network
-  networking.networkmanager.enable = true;
-  networking.firewall.enable = false;
-  # networking.firewall.allowedUDPPorts = [ ${services.tailscale.port} ];
-  networking.nameservers = [
-    "192.168.68.250"
-    "1.1.1.1"
-    "100.100.100.100"
-  ];
-  services.resolved.enable = true;
+  # Home manager
+  home-manager.extraSpecialArgs = { inherit inputs; };
+  home-manager.useUserPackages = true;
+  home-manager.users.samy = {
+    imports = [
+      hyprland.homeManagerModules.default
+      nix-flatpak.homeManagerModules.nix-flatpak
+      ../../home
+    ];
+  };
 
   # Locale options
   time.timeZone = "Europe/Berlin";
@@ -49,25 +56,21 @@
   services.xserver.xkb.layout = "de";
   console.keyMap = "de";
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
   # Display Manager
+  services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
 
-  nixpkgs.config.allowUnfree = true;
-
   # Programs
-  programs.steam.enable = true;  # Needs to be in system conf for alvr.
+  programs.steam.enable = true; # Needs to be in system conf for alvr.
 
   # Hyprland
   nix.settings = {
-    substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+    substituters = [ "https://hyprland.cachix.org" ];
+    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
   };
-  programs.hyprland ={
-      enable = true;
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+  programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
   services.gnome.gnome-keyring.enable = true;
   programs.dconf.enable = true;
@@ -75,26 +78,12 @@
   # Fix blurry electron apps
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  # Services
-  services.sunshine = {
-    enable = true;
-    autoStart = true;
-    capSysAdmin = true;
-    openFirewall = true;
-  };
-
-  # VR streaming
-  services.wivrn.enable = true;
-  programs.envision = {
-    enable = true;
-    openFirewall = true; # This is set true by default
-  };
-
   services.flatpak.enable = true;
+
   # VERY IMPORTANT:
   # sudo tailscale up --operator=$USER
   services.tailscale.enable = true;
-  services.blueman.enable = true;
+
   services.syncthing = {
     enable = true;
     openDefaultPorts = true;
@@ -107,13 +96,17 @@
   users.users.samy = {
     isNormalUser = true;
     description = "Samy";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
   };
 
   # Make unmounted disks appear in dolphin
   services.udisks2.enable = true;
 
-  # Additional packages (nix search <pkg>)
+  # Additional packages
+  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     libsForQt5.qtsvg
     kdePackages.kio-fuse
@@ -129,14 +122,13 @@
   ];
 
   # Fix unpopulated MIME menus in dolphin
-  environment.etc."/xdg/menus/applications.menu".text = builtins.readFile "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
-
+  environment.etc."/xdg/menus/applications.menu".text =
+    builtins.readFile "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  # hardware.pulseaudio.enable = true;
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {

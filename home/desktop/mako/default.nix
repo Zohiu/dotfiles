@@ -1,17 +1,22 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-home.packages = with pkgs; [
+  home.packages = with pkgs; [
     libnotify
-];
+  ];
 
-services.mako = {
+  services.mako = {
     enable = true;
-};
+  };
 
-xdg.configFile."mako" = {
+  xdg.configFile."mako" = {
     source = ./config;
     recursive = true;
-};
+  };
 
 }

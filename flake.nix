@@ -1,4 +1,3 @@
- 
 {
   description = "Zohiu's NixOS Flake";
 
@@ -14,7 +13,7 @@
 
     # Hyprland
     hyprland.url = "github:hyprwm/Hyprland?submodules=1";
-      hyprland-plugins = {
+    hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
@@ -23,8 +22,8 @@
       inputs.hyprland.follows = "hyprland";
     };
     hypr-dynamic-cursors = {
-        url = "github:VirtCode/hypr-dynamic-cursors";
-        inputs.hyprland.follows = "hyprland";
+      url = "github:VirtCode/hypr-dynamic-cursors";
+      inputs.hyprland.follows = "hyprland";
     };
 
     # Framework stuff
@@ -35,51 +34,49 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-flatpak, hyprland, split-monitor-workspaces, nixos-hardware, fw-fanctrl, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      nix-flatpak,
+      hyprland,
+      split-monitor-workspaces,
+      nixos-hardware,
+      fw-fanctrl,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-    in {
+    in
+    {
       nixosConfigurations = {
         crystal = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs; inherit home-manager;};
+          specialArgs = {
+            inherit inputs;
+            inherit home-manager;
+            inherit hyprland;
+            inherit nix-flatpak;
+          };
           modules = [
-            ./hosts/crystal
             home-manager.nixosModules.home-manager
-
-            {
-              home-manager.extraSpecialArgs = {inherit inputs;};
-              home-manager.useUserPackages = true;
-              home-manager.users.samy = {
-                imports = [
-                  hyprland.homeManagerModules.default
-                  nix-flatpak.homeManagerModules.nix-flatpak
-                  ./home/home.nix
-                ];
-              };
-            }
+            ./hosts/crystal
           ];
         };
 
         shard = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs; inherit home-manager;};
+          specialArgs = {
+            inherit inputs;
+            inherit home-manager;
+            inherit hyprland;
+            inherit nix-flatpak;
+          };
           modules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
             fw-fanctrl.nixosModules.default
             home-manager.nixosModules.home-manager
             ./hosts/shard
-
-            {
-              home-manager.extraSpecialArgs = {inherit inputs;};
-              home-manager.useUserPackages = true;
-              home-manager.users.samy = {
-                imports = [
-                  hyprland.homeManagerModules.default
-                  nix-flatpak.homeManagerModules.nix-flatpak
-                  ./home/home.nix
-                ];
-              };
-            }
           ];
         };
       };

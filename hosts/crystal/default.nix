@@ -1,4 +1,3 @@
- 
 { config, pkgs, ... }:
 
 {
@@ -20,13 +19,34 @@
           main = {
             rightmeta = "rightalt";
           };
-          otherlayer = {};
+          otherlayer = { };
         };
       };
     };
   };
 
-  # Home Manager overrides
+  # Desktop streaming
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
+
+  # VR streaming
+  services.wivrn.enable = true;
+  programs.envision = {
+    enable = true;
+    openFirewall = true; # This is set true by default
+  };
+
+  # Program overrides
+  home-manager.users.samy.home.packages = [
+    # Beat saber
+    bs-manager
+  ];
+
+  # Hyprland overrides
   home-manager.users.samy.wayland.windowManager.hyprland.settings = {
     monitor = [
       "HDMI-A-1, 1920x1080@60, 0x1080, auto"

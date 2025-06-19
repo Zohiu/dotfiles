@@ -1,7 +1,7 @@
 { ... }:
 {
-xdg.configFile."mpv" = {
+  xdg.configFile."mpv" = {
     source = ./config;
     recursive = true;
-};
+  };
 }
