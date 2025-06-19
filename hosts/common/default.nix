@@ -115,7 +115,6 @@
     kdePackages.kio-fuse
     libsForQt5.kio-extras
     libsForQt5.ffmpegthumbs
-    hyprpolkitagent
   ];
 
   # Fonts

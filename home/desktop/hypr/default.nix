@@ -197,6 +197,17 @@ wayland.windowManager.hyprland = {
   };
 };
 
+services.hypridle = {
+  enable = true;
+  settings = {
+    after_sleep_cmd = "sudo systemctl restart NetworkManager";
+
+    inhibit_sleep = 1;
+  };
+};
+
+services.hyprpolkitagent.enable = true;
+
 services.clipman.enable = true;
 home.packages = with pkgs; [
     xdg-desktop-portal

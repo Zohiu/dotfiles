@@ -1,6 +1,10 @@
 { config, lib, pkgs, ... }:
 let
 
+lock_and_sleep = pkgs.writeShellScriptBin "lock_and_sleep" ''
+hyprlock & systemctl suspend
+'';
+
 rebuild = pkgs.writeShellScriptBin "rebuild" ''
 sudo nixos-rebuild $1 --flake ~/dotfiles#$(hostname)
 '';
@@ -58,6 +62,7 @@ fi
 in
 {
   home.packages = with pkgs; [
+    lock_and_sleep
     rebuild
     remount_force_all
     search
