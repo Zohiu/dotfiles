@@ -4,6 +4,7 @@
   inputs,
   hyprland,
   nix-flatpak,
+  catppuccin,
   ...
 }:
 
@@ -36,6 +37,10 @@
       ../../home
     ];
   };
+  
+  # Theme
+  catppuccin.flavor = "mocha";
+  catppuccin.enable = true;
 
   # Locale options
   time.timeZone = "Europe/Berlin";

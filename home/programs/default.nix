@@ -7,6 +7,7 @@
     ./vscodium
     ./gnupg
     ./git
+    ./fish
   ];
 
   services.flatpak.update.auto.enable = false;

@@ -11,6 +11,9 @@
     # Flatpak for home manager
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
+    # Catppuccin
+    catppuccin.url = "github:catppuccin/nix";
+
     # Hyprland
     hyprland.url = "github:hyprwm/Hyprland?submodules=1";
     hyprland-plugins = {
@@ -40,6 +43,7 @@
       nixpkgs,
       home-manager,
       nix-flatpak,
+      catppuccin,
       hyprland,
       split-monitor-workspaces,
       nixos-hardware,
@@ -58,8 +62,10 @@
             inherit home-manager;
             inherit hyprland;
             inherit nix-flatpak;
+            inherit catppuccin;
           };
           modules = [
+            catppuccin.nixosModules.catppuccin
             home-manager.nixosModules.home-manager
             ./hosts/crystal
           ];
@@ -71,10 +77,12 @@
             inherit home-manager;
             inherit hyprland;
             inherit nix-flatpak;
+            inherit catppuccin;
           };
           modules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
             fw-fanctrl.nixosModules.default
+            catppuccin.nixosModules.catppuccin
             home-manager.nixosModules.home-manager
             ./hosts/shard
           ];
