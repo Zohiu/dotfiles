@@ -8,6 +8,7 @@
     ./gnupg
     ./git
     ./fish
+    ./btop
   ];
 
   services.flatpak.update.auto.enable = false;
