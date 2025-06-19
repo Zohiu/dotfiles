@@ -11,6 +11,10 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Kernel modules
+  boot.kernelModules = [ "v4l2loopback" ];
+  boot.extraModulePackages = [ pkgs.linuxPackages.v4l2loopback ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -115,6 +119,7 @@
     kdePackages.kio-fuse
     libsForQt5.kio-extras
     libsForQt5.ffmpegthumbs
+    v4l-utils # For OBS virtual cam
   ];
 
   # Fonts
