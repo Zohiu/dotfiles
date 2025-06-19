@@ -10,8 +10,14 @@ let
     hyprlock & systemctl suspend
   '';
 
-  rebuild = pkgs.writeShellScriptBin "rebuild" ''
-    sudo nixos-rebuild $1 --flake ~/dotfiles#$(hostname)
+  rebuild-switch = pkgs.writeShellScriptBin "rebuild-switch" ''
+    cd ~/dotfiles && git pull --rebase
+    sudo nixos-rebuild switch --flake ~/dotfiles#$(hostname)
+  '';
+
+  rebuild-test = pkgs.writeShellScriptBin "rebuild-test" ''
+    cd ~/dotfiles && git add -A
+    sudo nixos-rebuild test --flake ~/dotfiles#$(hostname)
   '';
 
   remount_force_all = pkgs.writeShellScriptBin "remount_force_all" ''
@@ -68,7 +74,8 @@ in
 {
   home.packages = with pkgs; [
     lock_and_sleep
-    rebuild
+    rebuild-switch
+    rebuild-test
     remount_force_all
     search
     cava-internal
