@@ -71,18 +71,26 @@
       jetbrains.pycharm-community-bin
       jetbrains.idea-community-bin
 
-      # Command line utils
-      fish
-      wlr-randr
-      nitch
-      neofetch
-      wget
+      # Basics
       rustup
       gnumake
-      curl
       appimage-run
-      sqlite
       gnupg
+      wget
+      curl
+
+      # Fun tools
+      nitch
+      neofetch
+
+      # Command line tools
+      tldr
+      ncdu
+      lsd
+      fzf
+      fd
+      bat
+      broot
 
       # TUI apps
       micro
@@ -90,6 +98,8 @@
       btop
 
       # Libs / Requirements
+      sqlite
+      wlr-randr
       wineWowPackages.stable
       kdePackages.kservice
       nixfmt-rfc-style
