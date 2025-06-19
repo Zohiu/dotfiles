@@ -42,7 +42,7 @@ wayland.windowManager.hyprland = {
       sensitivity = 1.0;
       accel_profile = "flat";
       force_no_accel = true;
-      natural_scroll = true;
+      natural_scroll = false;
 
       touchpad = {
         natural_scroll = true;
