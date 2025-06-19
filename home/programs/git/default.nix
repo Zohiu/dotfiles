@@ -11,4 +11,8 @@
       init.defaultBranch = "main";
     };
   };
+
+  home.packages = [
+    pkgs.github-backup
+  ];
 }
