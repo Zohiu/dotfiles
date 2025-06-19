@@ -5,28 +5,13 @@
   ...
 }:
 let
-
   lock_and_sleep = pkgs.writeShellScriptBin "lock_and_sleep" ''
     hyprlock & systemctl suspend
-  '';
-
-  rebuild-switch = pkgs.writeShellScriptBin "rebuild-switch" ''
-    cd ~/dotfiles && git pull --rebase
-    sudo nixos-rebuild switch --flake ~/dotfiles#$(hostname)
-  '';
-
-  rebuild-test = pkgs.writeShellScriptBin "rebuild-test" ''
-    cd ~/dotfiles && git add -A
-    sudo nixos-rebuild test --flake ~/dotfiles#$(hostname)
   '';
 
   remount_force_all = pkgs.writeShellScriptBin "remount_force_all" ''
     sudo umount -l /mnt/*
     rebuild test
-  '';
-
-  search = pkgs.writeShellScriptBin "search" ''
-    nix search nixpkgs $1
   '';
 
   cava-internal = pkgs.writeShellScriptBin "cava-internal" ''
@@ -74,10 +59,7 @@ in
 {
   home.packages = with pkgs; [
     lock_and_sleep
-    rebuild-switch
-    rebuild-test
     remount_force_all
-    search
     cava-internal
     wallpaper_random
     fixbrightness
