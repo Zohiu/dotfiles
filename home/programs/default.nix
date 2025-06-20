@@ -97,6 +97,8 @@
       micro
       nano
       btop
+      wikiman
+      lynx
 
       # Libs / Requirements
       sqlite
