@@ -90,6 +90,10 @@
         ];
       };
 
+      xwayland = {
+        force_zero_scaling = true;
+      };
+
       misc = {
         vfr = true; # Lower framerate when no movement.
       };
@@ -127,6 +131,7 @@
         "float,title:\\(DEBUG\\)$"
         "center,title:\\(DEBUG\\)$"
         "size 900 600,title:\\(DEBUG\\)$"
+        "noinitialfocus, class:(jetbrains-)(.*), floating:1"
       ];
 
       "$mainMod" = "SUPER";
