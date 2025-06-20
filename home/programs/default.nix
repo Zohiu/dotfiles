@@ -70,7 +70,13 @@
       inkscape
 
       jetbrains.pycharm-community-bin
-      jetbrains.idea-community-bin
+
+      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-community [
+        "minecraft-development"
+        "catppuccin-theme"
+        "catppuccin-icons"
+        "rainbow-brackets"
+      ])
 
       # Basics
       rustup
