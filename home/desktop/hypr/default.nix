@@ -34,7 +34,7 @@
         "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "pkill waybar; waybar"
-        "XDG_MENU_PREFIX=plasma- kbuildsycoca6"
+        "XDG_MENU_PREFIX=plasma- kbuildsycoca5"
       ];
 
       input = {
@@ -232,8 +232,8 @@
     pamixer
     networkmanagerapplet
 
-    # plasma-workspace
     libsForQt5.plasma-workspace
+    libsForQt5.kservice
 
     papirus-folders
   ];
