@@ -144,5 +144,15 @@
     jack.enable = true;
   };
 
+  # Garbage collection - removes old generations and their packages.
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
+
+  nix.optimise.automatic = true;
+
+
   security.sudo.wheelNeedsPassword = false;
 }
