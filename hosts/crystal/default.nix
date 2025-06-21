@@ -52,6 +52,7 @@
     "10-custom-audio-rate" = {
       "context.properties" = {
         "default.clock.rate" = 192000; # Or 44100, 48000, 96000, 192000, etc.
+        "resample.quality" = 10;
       };
     };
   };
