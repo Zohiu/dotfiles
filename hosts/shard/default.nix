@@ -117,5 +117,7 @@
     ];
   };
 
+  # Version of first install
+  home-manager.users.samy.home.stateVersion = "24.11";
   system.stateVersion = "24.11";
 }
