@@ -42,9 +42,19 @@
 
   # Program overrides
   home-manager.users.samy.home.packages = [
-    # Beat saber
     pkgs.bs-manager
+    pkgs.alsa-scarlett-gui
   ];
+
+  # Sample rate
+  services.pipewire.extraConfig.pipewire = {
+    # Will create a config in /etc/pipewire/pipewire.conf.d/
+    "10-custom-audio-rate" = {
+      "context.properties" = {
+        "default.clock.rate" = 192000; # Or 44100, 48000, 96000, 192000, etc.
+      };
+    };
+  };
 
   # Hyprland overrides
   home-manager.users.samy.wayland.windowManager.hyprland.settings = {

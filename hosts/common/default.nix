@@ -153,6 +153,5 @@
 
   nix.optimise.automatic = true;
 
-
   security.sudo.wheelNeedsPassword = false;
 }
