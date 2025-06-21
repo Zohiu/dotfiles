@@ -43,7 +43,7 @@
   # Program overrides
   home-manager.users.samy.home.packages = [
     # Beat saber
-    bs-manager
+    pkgs.bs-manager
   ];
 
   # Hyprland overrides
