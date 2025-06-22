@@ -61,7 +61,7 @@
       };
     };
 
-    pipewire-pulse."10-rhythm-game-pulse-192khz" = {
+    pipewire-pulse."10-pulse-192khz" = {
       "pulse.properties" = {
         "audio.channels" = 2;
         "audio.format" = "S32LE";
