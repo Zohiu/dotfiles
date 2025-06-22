@@ -54,9 +54,6 @@
         "context.properties" = {
           "default.clock.rate" = 192000; # Or 44100, 48000, 96000, 192000, etc.
           "resample.quality" = 10;
-          "default.clock.quantum" = 128;
-          "default.clock.min-quantum" = 128;
-          "default.clock.max-quantum" = 128;
         };
       };
     };
