@@ -47,12 +47,27 @@
   ];
 
   # Sample rate
-  services.pipewire.extraConfig.pipewire = {
-    # Will create a config in /etc/pipewire/pipewire.conf.d/
-    "10-custom-audio-rate" = {
-      "context.properties" = {
-        "default.clock.rate" = 192000; # Or 44100, 48000, 96000, 192000, etc.
-        "resample.quality" = 10;
+  services.pipewire.extraConfig = {
+    pipewire = {
+      # Will create a config in /etc/pipewire/pipewire.conf.d/
+      "10-custom-audio-rate" = {
+        "context.properties" = {
+          "default.clock.rate" = 192000; # Or 44100, 48000, 96000, 192000, etc.
+          "resample.quality" = 10;
+          "default.clock.quantum" = 128;
+          "default.clock.min-quantum" = 128;
+          "default.clock.max-quantum" = 128;
+        };
+      };
+    };
+
+    pipewire-pulse."10-rhythm-game-pulse-192khz" = {
+      "pulse.properties" = {
+        "audio.channels" = 2;
+        "audio.format" = "S32LE";
+        "default.sample.rate" = 192000;
+        "default.channels" = 2;
+        "default.sample.format" = "S32LE";
       };
     };
   };
