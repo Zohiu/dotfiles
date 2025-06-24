@@ -50,6 +50,7 @@
       moonlight-qt
       gimp
       discord
+      virt-viewer
 
       obs-studio
       obsidian
