@@ -22,6 +22,10 @@ let
     bash -c "swww img $(find ~/dotfiles/home/wallpapers/ -type f | shuf -n 1)"
   '';
 
+  aniworld = pkgs.writeShellScriptBin "aniworld" ''
+    nix-shell -p pipx yt-dlp --run "pipx install aniworld && /home/samy/.local/bin/aniworld"
+  '';
+
   fixbrightness = pkgs.writeShellScriptBin "fixbrightness" ''
     sudo chmod a+rw /sys/class/backlight/amdgpu_bl1/brightness
   '';
@@ -62,6 +66,7 @@ in
     remount_force_all
     cava-internal
     wallpaper_random
+    aniworld
     fixbrightness
     brightness
   ];
