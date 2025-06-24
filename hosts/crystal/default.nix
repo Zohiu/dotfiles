@@ -40,6 +40,8 @@
     openFirewall = true; # This is set true by default
   };
 
+  programs.corectrl.enable = true;
+
   # Program overrides
   home-manager.users.samy.home.packages = [
     pkgs.bs-manager
