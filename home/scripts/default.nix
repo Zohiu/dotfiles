@@ -38,7 +38,7 @@ let
   brightness = pkgs.writeShellScriptBin "brightness" ''
     # Taken from https://github.com/MasterDevX/linux-backlight-controller/tree/master
     backlight_class=/sys/class/backlight/
-    monitor=$(xrandr | grep -w connected | awk '{print $1}')
+    monitor=DP-1
 
     for device in $backlight_class*; do
         if ls -l $device | grep -q $monitor; then
