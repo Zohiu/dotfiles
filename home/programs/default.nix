@@ -40,6 +40,7 @@
       blueman
       firefox
       chromium
+      ladybird
       bitwarden-desktop
       qbittorrent
 
