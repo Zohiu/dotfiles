@@ -26,6 +26,11 @@ let
     nix-shell -p pipx yt-dlp --run "pipx install aniworld && /home/samy/.local/bin/aniworld"
   '';
 
+  ytdl = pkgs.writeShellScriptBin "ytdl" ''
+    nix-shell -p yt-dlp --run "yt-dlp '$1' --add-metadata --embed-thumbnail -o '%(channel)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
+  '';
+
+
   fixbrightness = pkgs.writeShellScriptBin "fixbrightness" ''
     sudo chmod a+rw /sys/class/backlight/amdgpu_bl1/brightness
   '';
@@ -67,6 +72,7 @@ in
     cava-internal
     wallpaper_random
     aniworld
+    ytdl
     fixbrightness
     brightness
   ];
