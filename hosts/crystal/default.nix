@@ -34,7 +34,12 @@
   };
 
   # VR streaming
-  services.wivrn.enable = true;
+  # services.wivrn.enable = true;
+  # Use flatpak to always get the newest version because meta likes to auto-update apps without consent.
+  home-manager.users.samy.services.flatpak.packages = [
+    "io.github.wivrn.wivrn"
+  ];
+
   programs.envision = {
     enable = true;
     openFirewall = true; # This is set true by default

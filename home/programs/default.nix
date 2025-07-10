@@ -28,6 +28,7 @@
     "org.prismlauncher.PrismLauncher"
     "io.github.MakovWait.Godots"
     "com.github.tchx84.Flatseal"
+    "org.jdownloader.JDownloader"
   ];
 
   # Also need to rebuild nix to fix dolphin MIME
@@ -41,6 +42,7 @@
       firefox
       chromium
       ladybird
+      tor-browser
       bitwarden-desktop
       qbittorrent
 
@@ -70,6 +72,11 @@
       jellyfin-media-player
       gnome-network-displays
       inkscape
+
+      # DVD/Blu-Ray ripping
+      makemkv
+      handbrake
+      ffmpeg-full
 
       jetbrains.pycharm-community-bin
 
