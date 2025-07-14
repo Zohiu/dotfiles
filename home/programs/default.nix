@@ -54,6 +54,7 @@
       gimp
       discord
       virt-viewer
+      osu-lazer
 
       obs-studio
       obsidian

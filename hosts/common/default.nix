@@ -68,6 +68,14 @@
   # Programs
   programs.steam.enable = true; # Needs to be in system conf for alvr.
 
+  # Drawing tablets
+  hardware.opentabletdriver.enable = true;
+  hardware.opentabletdriver.daemon.enable = true;
+  boot.blacklistedKernelModules = [
+    "wacom"
+    "hid_uclogic"
+  ];
+
   # Hyprland
   nix.settings = {
     substituters = [ "https://hyprland.cachix.org" ];
