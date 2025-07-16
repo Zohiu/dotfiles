@@ -59,7 +59,8 @@
       obs-studio
       obsidian
       signal-desktop
-      tidal-hifi
+      # tidal-hifi
+      spotify
       blender
       blockbench
       bitwig-studio
