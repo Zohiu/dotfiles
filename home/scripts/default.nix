@@ -27,7 +27,7 @@ let
   '';
 
   ytdl = pkgs.writeShellScriptBin "ytdl" ''
-    nix-shell -p yt-dlp --run "yt-dlp '$1' --add-metadata --embed-thumbnail -o '%(channel)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
+    nix-shell -p yt-dlp --run "yt-dlp '$1' --add-metadata --cookies cookies.txt --embed-thumbnail -o '%(channel)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
   '';
 
 

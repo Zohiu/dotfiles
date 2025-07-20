@@ -80,6 +80,9 @@
       handbrake
       ffmpeg-full
 
+      # tmp
+      teamviewer
+
       jetbrains.pycharm-community-bin
 
       (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-community [
