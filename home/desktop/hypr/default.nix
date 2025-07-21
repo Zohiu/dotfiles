@@ -404,6 +404,7 @@
       XDG_SESSION_DESKTOP = "Hyprland";
       XDG_SESSION_TYPE = "wayland";
       NIXOS_OZONE_WL = "1";
+      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
       # AQ_DRM_DEVICES = "/dev/dri/card0:/dev/dri/card1";
     };
   };

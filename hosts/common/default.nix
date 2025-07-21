@@ -69,6 +69,7 @@
 
   # Programs
   programs.steam.enable = true; # Needs to be in system conf for alvr.
+  services.ollama.enable = true;
 
   # Drawing tablets
   hardware.opentabletdriver.enable = true;
@@ -92,6 +93,7 @@
 
   # Fix blurry electron apps
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  environment.sessionVariables.PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
 
   services.flatpak.enable = true;
 

@@ -83,8 +83,6 @@
       # tmp
       teamviewer
 
-      jetbrains.pycharm-community-bin
-
       (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-community [
         "minecraft-development"
         "catppuccin-theme"
@@ -92,13 +90,23 @@
         "rainbow-brackets"
       ])
 
+      jetbrains.pycharm-community-bin
+
       # Basics
-      rustup
+      # rustup
+      rustc
+      cargo
+      clang
+      rustfmt
+      pkg-config
+      openssl
+      rust-analyzer
       gnumake
       appimage-run
       gnupg
       wget
       curl
+      direnv
 
       # Fun tools
       nitch
@@ -112,6 +120,8 @@
       fd
       bat
       broot
+      n-m3u8dl-re
+      ollama
 
       # TUI apps
       micro

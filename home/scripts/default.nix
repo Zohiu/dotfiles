@@ -5,6 +5,10 @@
   ...
 }:
 let
+  rust_create_project = pkgs.writeShellScriptBin "rust_create_project" ''
+    nix --accept-flake-config run github:juspay/omnix -- init github:srid/rust-nix-template -o $1
+  '';
+
   lock_and_sleep = pkgs.writeShellScriptBin "lock_and_sleep" ''
     hyprlock & systemctl suspend
   '';
@@ -75,5 +79,6 @@ in
     ytdl
     fixbrightness
     brightness
+    rust_create_project
   ];
 }
