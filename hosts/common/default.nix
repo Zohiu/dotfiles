@@ -70,6 +70,8 @@
   # Programs
   programs.steam.enable = true; # Needs to be in system conf for alvr.
   services.ollama.enable = true;
+  virtualisation.docker.rootless.enable = true;
+  virtualisation.docker.enable = true;
 
   # Drawing tablets
   hardware.opentabletdriver.enable = true;
