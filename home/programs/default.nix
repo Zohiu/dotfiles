@@ -45,6 +45,7 @@
       tor-browser
       bitwarden-desktop
       qbittorrent
+      thunderbird
 
       libsForQt5.dolphin
       libsForQt5.ark
