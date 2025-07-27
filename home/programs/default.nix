@@ -29,6 +29,7 @@
     "io.github.MakovWait.Godots"
     "com.github.tchx84.Flatseal"
     "org.jdownloader.JDownloader"
+    "org.vinegarhq.Sober"
   ];
 
   # Also need to rebuild nix to fix dolphin MIME
@@ -56,6 +57,8 @@
       discord
       virt-viewer
       osu-lazer
+      umu-launcher
+      protonplus
 
       obs-studio
       obsidian
