@@ -47,6 +47,7 @@
       bitwarden-desktop
       qbittorrent
       thunderbird
+      gparted
 
       libsForQt5.dolphin
       libsForQt5.ark

@@ -79,11 +79,11 @@
   # Hyprland overrides
   home-manager.users.samy.wayland.windowManager.hyprland.settings = {
     monitor = [
-      "HDMI-A-1, 1920x1080@60, 0x1080, auto"
-      "DP-1, 2560x1440@165, 1920x720, auto"
-      "DP-3, 1920x1080@60, 4480x1080, auto"
+      "HDMI-A-3, 1920x1080@60, 0x1080, auto"
+      "DP-2, 2560x1440@165, 1920x720, auto"
+      "DP-4, 1920x1080@60, 4480x1080, auto"
 
-      "DP-2, 1920x1080@60, 4480x0, auto"
+      "DP-3, 1920x1080@60, 4480x0, auto"
     ];
 
     env = [
