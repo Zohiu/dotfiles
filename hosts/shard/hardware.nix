@@ -54,6 +54,7 @@
     { device = "/dev/disk/by-uuid/6a94bde0-3b03-4230-8115-b93003aa6a80"; }
   ];
 
+  hardware.cpu.x86.msr.enable = true;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
