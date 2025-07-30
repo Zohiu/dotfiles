@@ -13,18 +13,16 @@ function rebuild-test
 end
 
 function rebuild-update
-    cd ~/dotfiles && pull && sudo nixos-rebuild switch --flake ~/dotfiles#(hostname)
+    cd ~/dotfiles && git pull --rebase && sudo nixos-rebuild switch --flake ~/dotfiles#(hostname)
 end
 
 function rebuild-commit
-    cd ~/dotfiles && addall && commit $argv && push && sudo nixos-rebuild switch --flake ~/dotfiles#(hostname)
+    cd ~/dotfiles && addall && git commit $argv && push && sudo nixos-rebuild switch --flake ~/dotfiles#(hostname)
 end
 
 # Git
 alias addall 'git add -A'
-alias pull 'git pull --rebase'
 alias push 'git push -u origin (git branch --show-current)'
-alias commit 'git commit'
 
 # broot
 function br --wraps=broot

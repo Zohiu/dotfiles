@@ -49,6 +49,9 @@
       thunderbird
       gparted
 
+      monero-gui
+      xmrig
+
       libsForQt5.dolphin
       libsForQt5.ark
       libsForQt5.kate
