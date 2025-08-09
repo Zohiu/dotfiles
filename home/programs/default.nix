@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+ { pkgs, inputs, ... }:
 {
   imports = [
     ./kitty
@@ -32,6 +32,13 @@
     "org.vinegarhq.Sober"
   ];
 
+  programs.thunderbird.enable = true;
+  programs.thunderbird.profiles = {
+      "x7z6kjks.default" = {
+        isDefault = true;
+      };
+    };
+
   # Also need to rebuild nix to fix dolphin MIME
   home.packages = (
     with pkgs;
@@ -46,11 +53,13 @@
       tor-browser
       bitwarden-desktop
       qbittorrent
-      thunderbird
+      # thunderbird
       gparted
 
       monero-gui
       xmrig
+      clipnotify
+      xclip
 
       libsForQt5.dolphin
       libsForQt5.ark
@@ -115,6 +124,7 @@
       wget
       curl
       direnv
+      go
 
       # Fun tools
       nitch
@@ -144,6 +154,9 @@
       wineWowPackages.stable
       kdePackages.kservice
       nixfmt-rfc-style
+
+      # Job stuff
+      teams-for-linux
     ]
   );
 }
