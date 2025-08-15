@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, pkgs-unstable, inputs, ... }:
 let
   # Lossless scaling app for steam
 #   lsfg-vk = pkgs.stdenv.mkDerivation rec {
@@ -101,7 +101,8 @@ in
 
       obs-studio
       obsidian
-      signal-desktop
+      pkgs-unstable.signal-desktop
+
       # tidal-hifi
       spotify
       blender

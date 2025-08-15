@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
   inputs,
   hyprland,
   nix-flatpak,
@@ -125,6 +126,12 @@
       "networkmanager"
       "wheel"
     ];
+  };
+
+  home-manager = {
+    extraSpecialArgs = {
+      inherit pkgs-unstable;
+    };
   };
 
   # Make unmounted disks appear in dolphin

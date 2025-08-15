@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-25.05";
@@ -45,6 +46,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       home-manager,
       nix-flatpak,
       catppuccin,
@@ -58,6 +60,7 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
     in
     {
       nixosConfigurations = {
@@ -68,6 +71,7 @@
             inherit hyprland;
             inherit nix-flatpak;
             inherit catppuccin;
+            inherit pkgs-unstable;
           };
           modules = [
             catppuccin.nixosModules.catppuccin
@@ -84,6 +88,7 @@
             inherit hyprland;
             inherit nix-flatpak;
             inherit catppuccin;
+            inherit pkgs-unstable;
           };
           modules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
