@@ -73,6 +73,12 @@
   virtualisation.docker.rootless.enable = true;
   virtualisation.docker.enable = true;
 
+  # Lossless Scaling
+  services.lsfg-vk = {
+    enable = true;
+    ui.enable = true; # installs gui for configuring lsfg-vk
+  };
+
   # Drawing tablets
   hardware.opentabletdriver.enable = true;
   hardware.opentabletdriver.daemon.enable = true;

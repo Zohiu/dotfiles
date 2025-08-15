@@ -101,6 +101,10 @@
         vfr = true; # Lower framerate when no movement.
       };
 
+      render = {
+        direct_scanout = 0;
+      };
+
       dwindle = {
         pseudotile = true;
         preserve_split = true;

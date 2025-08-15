@@ -35,6 +35,10 @@
       url = "github:TamtamHero/fw-fanctrl/packaging/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Lossless scaling
+    lsfg-vk-flake.url = "github:pabloaul/lsfg-vk-flake/main";
+    lsfg-vk-flake.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -48,6 +52,7 @@
       split-monitor-workspaces,
       nixos-hardware,
       fw-fanctrl,
+      lsfg-vk-flake,
       ...
     }@inputs:
     let
@@ -68,6 +73,7 @@
             catppuccin.nixosModules.catppuccin
             home-manager.nixosModules.home-manager
             ./hosts/crystal
+            lsfg-vk-flake.nixosModules.default
           ];
         };
 
@@ -85,6 +91,7 @@
             catppuccin.nixosModules.catppuccin
             home-manager.nixosModules.home-manager
             ./hosts/shard
+            lsfg-vk-flake.nixosModules.default
           ];
         };
       };

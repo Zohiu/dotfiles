@@ -1,4 +1,27 @@
- { pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
+let
+  # Lossless scaling app for steam
+#   lsfg-vk = pkgs.stdenv.mkDerivation rec {
+#     pname = "lsfg-vk";
+#     version = "1.0.0";
+#
+#     src = pkgs.fetchzip {
+#       url = "https://github.com/PancakeTAS/lsfg-vk/releases/download/v1.0.0/lsfg-vk-1.0.0-x86_64.zip";
+#       sha256 = "1s5plyrj60kwjc00d8fl28gmkv9cd4jrx0y1g0a7s0mmrdk5vvnd"; # from nix-prefetch-url
+#       stripRoot = false;
+#     };
+#
+#     dontConfigure = true;
+#     dontBuild = true;
+#
+#     installPhase = ''
+#       # Install
+#       mkdir -p $out/usr
+#       cp -r bin lib share $out/
+#       # chmod +x $out/usr/bin/*   # make binaries executable
+#     '';
+#   };
+in
 {
   imports = [
     ./kitty
@@ -30,6 +53,8 @@
     "com.github.tchx84.Flatseal"
     "org.jdownloader.JDownloader"
     "org.vinegarhq.Sober"
+
+    { appId = "com.brave.Browser"; origin = "flathub";  }
   ];
 
   programs.thunderbird.enable = true;
@@ -38,6 +63,7 @@
         isDefault = true;
       };
     };
+
 
   # Also need to rebuild nix to fix dolphin MIME
   home.packages = (
