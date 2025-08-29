@@ -1,37 +1,20 @@
-{ ... }:
+{ lib, pkgs, ... }:
 
 {
-  # Using IP for nfs to fix slow unmounting on shutdown.
-  # These are internal tailnet IPs btw.
-  fileSystems."/mnt/data" = {
-    device = "100.96.28.102:/mnt/main/data";
-    fsType = "nfs";
-    options = [
-      "noauto"
-      "x-systemd.automount"
-      "x-systemd.mount-timeout=60"
-      "hard"
-      "rw"
-      "async"
-      "nfsvers=4.2"
-      "_netdev"
-      "x-systemd.requires=tailscaled.service"
-    ];
+  fileSystems."/mnt/truenas" = {
+    device = "//truenas/samy/";
+    fsType = "cifs";
+    options = let
+      automount_opts = "x-systemd.requires=tailscaled.service,x-systemd.automount,users,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+
+    in ["${automount_opts},credentials=/home/samy/.truenas-secrets"];
   };
 
-  fileSystems."/mnt/games" = {
-    device = "100.96.28.102:/mnt/main/games";
-    fsType = "nfs";
-    options = [
-      "noauto"
-      "x-systemd.automount"
-      "x-systemd.mount-timeout=60"
-      "hard"
-      "rw"
-      "async"
-      "nfsvers=4.2"
-      "_netdev"
-      "x-systemd.requires=tailscaled.service"
-    ];
+  security.wrappers."mount.cifs" = {
+    program = "mount.cifs";
+    source = "${lib.getBin pkgs.cifs-utils}/bin/mount.cifs";
+    owner = "samy";
+    group = "users";
+    setuid = true;
   };
 }
