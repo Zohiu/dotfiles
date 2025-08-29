@@ -104,6 +104,7 @@
           specialArgs = {
             inherit inputs;
             inherit home-manager;
+            inherit hyprland;
             inherit nix-flatpak;
             inherit catppuccin;
             inherit pkgs-unstable;
