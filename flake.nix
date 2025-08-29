@@ -99,6 +99,22 @@
             lsfg-vk-flake.nixosModules.default
           ];
         };
+
+        tv = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+            inherit home-manager;
+            inherit nix-flatpak;
+            inherit catppuccin;
+            inherit pkgs-unstable;
+          };
+          modules = [
+            catppuccin.nixosModules.catppuccin
+            home-manager.nixosModules.home-manager
+            ./hosts/tv
+            lsfg-vk-flake.nixosModules.default
+          ];
+        };
       };
     };
 }
