@@ -6,8 +6,19 @@
     device = "//truenas/samy/";
     fsType = "cifs";
     options = let
-      automount_opts = "x-systemd.requires=tailscaled.service,x-systemd.automount,uid=1000,gid=100,users,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-
-    in ["${automount_opts},credentials=/home/samy/.truenas-secrets"];
+      automountOpts = lib.concatStringsSep ","
+        [ "x-systemd.requires=tailscaled.service"
+          "x-systemd.automount"
+          "uid=1000"
+          "gid=100"
+          "users"
+          "noauto"
+          "suid"
+          "exec"
+          "x-systemd.idle-timeout=60"
+          "x-systemd.device-timeout=5s"
+          "x-systemd.mount-timeout=5s"
+        ];
+    in [ "${automountOpts},credentials=/home/samy/.truenas-secrets" ];
   };
 }
