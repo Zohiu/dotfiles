@@ -8,7 +8,7 @@ alias reload 'source ~/.config/fish/config.fish'
 
 # NixOS
 function rebuild-test
-    cd ~/dotfiles && addall && sudo nixos-rebuild test --flake ~/dotfiles#(hostname)
+    cd ~/dotfiles && addall && sudo nixos-rebuild test --flake ~/dotfiles#(hostname) $argv
     reload
 end
 

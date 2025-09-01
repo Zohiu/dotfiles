@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware.nix
+    ./filesystems.nix
     ../common
     ../amd.nix
   ];
