@@ -30,7 +30,7 @@
         "exec"
         "noatime"
         "nodiratime"
-        "x-systemd.automount"
+        # "x-systemd.automount"
         "_netdev"
     ];
     neededForBoot = false;

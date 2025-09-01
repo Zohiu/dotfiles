@@ -20,6 +20,10 @@ function rebuild-commit
     cd ~/dotfiles && addall && git commit $argv && push && sudo nixos-rebuild switch --flake ~/dotfiles#(hostname)
 end
 
+function reload-iscsi
+    sudo iscsiadm -m node -u; sudo iscsiadm -m node -l
+end
+
 # Git
 alias addall 'git add -A'
 alias push 'git push -u origin (git branch --show-current)'
