@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   imports = [
@@ -35,11 +35,30 @@
   };
 
   # VR streaming
-  # services.wivrn.enable = true;
-  # Use flatpak to always get the newest version because meta likes to auto-update apps without consent.
-  home-manager.users.samy.services.flatpak.packages = [
-    "io.github.wivrn.wivrn"
-  ];
+  services.wivrn.enable = true;
+  services.wivrn.defaultRuntime = true;
+  services.wivrn.package = pkgs-unstable.wivrn;
+  services.wivrn.autoStart = true;
+  services.wivrn.extraServerFlags = [ "--no-encrypt" ];
+  services.wivrn.config.enable = true;
+  home-manager.users.samy.xdg.configFile."wivrn/config.json".text = ''
+    {
+      "application": [
+        "${pkgs-unstable.wlx-overlay-s}/bin/wlx-overlay-s"
+      ],
+      "bitrate": 50000000,
+      "debug-gui": false,
+      "encoders.disabled": [
+        {
+          "height": 1.0,
+          "offset_x": 0.0,
+          "offset_y": 0.0,
+          "width": 1.0
+        }
+      ],
+      "use-steamvr-lh": false
+    }
+  '';
 
   programs.envision = {
     enable = true;

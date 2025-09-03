@@ -13,7 +13,7 @@ in
   # AMD graphics
   hardware.graphics = {
     enable = true;
-    package = pkgs-hypr.mesa;
+    package = pkgs.mesa;
     extraPackages = with pkgs; [
       libva
       libvdpau-va-gl
@@ -24,4 +24,7 @@ in
       rocmPackages.clr.icd
     ];
   };
+
+  # To see if it works:
+  # nix-shell -p glxinfo --run "glxinfo -B"
 }

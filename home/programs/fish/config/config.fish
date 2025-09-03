@@ -12,6 +12,11 @@ function rebuild-test
     reload
 end
 
+function rebuild-test-reboot
+    cd ~/dotfiles && addall && sudo nixos-rebuild boot --flake ~/dotfiles#(hostname) $argv
+    reboot
+end
+
 function rebuild-update
     cd ~/dotfiles && git pull --rebase && sudo nixos-rebuild switch --flake ~/dotfiles#(hostname)
 end

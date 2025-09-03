@@ -110,9 +110,9 @@
         preserve_split = true;
       };
 
-      gestures = {
-        workspace_swipe = false;
-      };
+      #gestures = {
+      #  workspace_swipe = false;
+      #};
 
       plugin = {
         "split-monitor-workspaces" = {

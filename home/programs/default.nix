@@ -70,7 +70,7 @@ in
     with pkgs;
     [
       # GUI apps
-      kitty
+      pkgs-unstable.kitty
       mpv
       blueman
       firefox
