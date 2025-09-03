@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, pkgs-stable, ... }:
 
 {
   imports = [
@@ -37,14 +37,14 @@
   # VR streaming
   services.wivrn.enable = true;
   services.wivrn.defaultRuntime = true;
-  services.wivrn.package = pkgs-unstable.wivrn;
+  services.wivrn.package = pkgs.wivrn;
   services.wivrn.autoStart = true;
   services.wivrn.extraServerFlags = [ "--no-encrypt" ];
   services.wivrn.config.enable = true;
   home-manager.users.samy.xdg.configFile."wivrn/config.json".text = ''
     {
       "application": [
-        "${pkgs-unstable.wlx-overlay-s}/bin/wlx-overlay-s"
+        "${pkgs.wlx-overlay-s}/bin/wlx-overlay-s"
       ],
       "bitrate": 60000000,
       "debug-gui": false,

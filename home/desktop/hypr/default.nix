@@ -31,13 +31,14 @@
         "while true; do sleep 300; wallpaper_random; done"
         "wl-paste -t text --watch clipman store --no-persist"
         "systemctl --user start hyprpolkitagent"
+        "hyprpaper"
       ];
 
       exec = [
         "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "pkill waybar; waybar"
-        "XDG_MENU_PREFIX=plasma- kbuildsycoca5"
+        "XDG_MENU_PREFIX=plasma- kbuildsycoca6"
       ];
 
       input = {
@@ -231,6 +232,7 @@
     grim
     slurp # Screenshots
     hyprlock
+    hyprpaper
     swww
     pavucontrol
     easyeffects
@@ -238,160 +240,13 @@
     wl-clipboard
     pamixer
     networkmanagerapplet
-
-    libsForQt5.plasma-workspace
-    libsForQt5.kservice
-
     papirus-folders
   ];
 
-  # KDE options
-  xdg.configFile."kdeglobals".text = ''
-    [ColorEffects:Disabled]
-    ChangeSelectionColor=
-    Color=30, 30, 46
-    ColorAmount=0.30000000000000004
-    ColorEffect=2
-    ContrastAmount=0.1
-    ContrastEffect=0
-    Enable=
-    IntensityAmount=-1
-    IntensityEffect=0
-
-    [ColorEffects:Inactive]
-    ChangeSelectionColor=true
-    Color=30, 30, 46
-    ColorAmount=0.5
-    ColorEffect=3
-    ContrastAmount=0
-    ContrastEffect=0
-    Enable=true
-    IntensityAmount=0
-    IntensityEffect=0
-
-    [Colors:Button]
-    BackgroundAlternate=203,166,247
-    BackgroundNormal=49, 50, 68
-    DecorationFocus=203,166,247
-    DecorationHover=49, 50, 68
-    ForegroundActive=250, 179, 135
-    ForegroundInactive=166, 173, 200
-    ForegroundLink=203,166,247
-    ForegroundNegative=243, 139, 168
-    ForegroundNeutral=249, 226, 175
-    ForegroundNormal=205, 214, 244
-    ForegroundPositive=166, 227, 161
-    ForegroundVisited=203, 166, 247
-
-    [Colors:Complementary]
-    BackgroundAlternate=17, 17, 27
-    BackgroundNormal=24, 24, 37
-    DecorationFocus=203,166,247
-    DecorationHover=49, 50, 68
-    ForegroundActive=250, 179, 135
-    ForegroundInactive=166, 173, 200
-    ForegroundLink=203,166,247
-    ForegroundNegative=243, 139, 168
-    ForegroundNeutral=249, 226, 175
-    ForegroundNormal=205, 214, 244
-    ForegroundPositive=166, 227, 161
-    ForegroundVisited=203, 166, 247
-
-    [Colors:Header]
-    BackgroundAlternate=17, 17, 27
-    BackgroundNormal=24, 24, 37
-    DecorationFocus=203,166,247
-    DecorationHover=49, 50, 68
-    ForegroundActive=250, 179, 135
-    ForegroundInactive=166, 173, 200
-    ForegroundLink=203,166,247
-    ForegroundNegative=243, 139, 168
-    ForegroundNeutral=249, 226, 175
-    ForegroundNormal=205, 214, 244
-    ForegroundPositive=166, 227, 161
-    ForegroundVisited=203, 166, 247
-
-    [Colors:Selection]
-    BackgroundAlternate=203,166,247
-    BackgroundNormal=203,166,247
-    DecorationFocus=203,166,247
-    DecorationHover=49, 50, 68
-    ForegroundActive=250, 179, 135
-    ForegroundInactive=24, 24, 37
-    ForegroundLink=203,166,247
-    ForegroundNegative=243, 139, 168
-    ForegroundNeutral=249, 226, 175
-    ForegroundNormal=17, 17, 27
-    ForegroundPositive=166, 227, 161
-    ForegroundVisited=203, 166, 247
-
-    [Colors:Tooltip]
-    BackgroundAlternate=27,25,35
-    BackgroundNormal=30, 30, 46
-    DecorationFocus=203,166,247
-    DecorationHover=49, 50, 68
-    ForegroundActive=250, 179, 135
-    ForegroundInactive=166, 173, 200
-    ForegroundLink=203,166,247
-    ForegroundNegative=243, 139, 168
-    ForegroundNeutral=249, 226, 175
-    ForegroundNormal=205, 214, 244
-    ForegroundPositive=166, 227, 161
-    ForegroundVisited=203, 166, 247
-
-    [Colors:View]
-    BackgroundAlternate=24, 24, 37
-    BackgroundNormal=30, 30, 46
-    DecorationFocus=203,166,247
-    DecorationHover=49, 50, 68
-    ForegroundActive=250, 179, 135
-    ForegroundInactive=166, 173, 200
-    ForegroundLink=203,166,247
-    ForegroundNegative=243, 139, 168
-    ForegroundNeutral=249, 226, 175
-    ForegroundNormal=205, 214, 244
-    ForegroundPositive=166, 227, 161
-    ForegroundVisited=203, 166, 247
-
-    [Colors:Window]
-    BackgroundAlternate=17, 17, 27
-    BackgroundNormal=24, 24, 37
-    DecorationFocus=203,166,247
-    DecorationHover=49, 50, 68
-    ForegroundActive=250, 179, 135
-    ForegroundInactive=166, 173, 200
-    ForegroundLink=203,166,247
-    ForegroundNegative=243, 139, 168
-    ForegroundNeutral=249, 226, 175
-    ForegroundNormal=205, 214, 244
-    ForegroundPositive=166, 227, 161
-    ForegroundVisited=203, 166, 247
-
-    [General]
-    TerminalApplication=kitty
-    TerminalService=kitty.desktop
-
-    [KDE]
-    ShowDeleteCommand=true
-    SingleClick=false
-
-    [PreviewSettings]
-    EnableRemoteFolderThumbnail=true
-    MaximumRemoteSize=10485760
-
-    [WM]
-    activeBackground=30,30,46
-    activeBlend=205,214,244
-    activeForeground=205,214,244
-    inactiveBackground=17,17,27
-    inactiveBlend=166,173,200
-    inactiveForeground=166,173,200
-  '';
-
-  qt = {
-    enable = true;
-    platformTheme.name = "kde";
-  };
+  #qt = {
+  #  enable = true;
+  #  platformTheme.name = "kde";
+  #};
 
   home = {
     sessionVariables = {
@@ -410,6 +265,7 @@
       NIXOS_OZONE_WL = "1";
       PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
       # AQ_DRM_DEVICES = "/dev/dri/card0:/dev/dri/card1";
+      QT_STYLE_OVERRIDE = "darkly";
     };
   };
 
@@ -436,13 +292,29 @@
     };
   };
 
+  qt = {
+    enable = true;
+    style.package = with pkgs; [
+      darkly-qt5
+      darkly
+      catppuccin-qt5ct
+      catppuccin
+      dracula-qt5-theme
+      dracula-theme
+    ];
+    platformTheme.name = "qtct";
+    kde.settings.kdeglobals.General.TerminalApplication = "kitty";
+    kde.settings.kdeglobals.Icons.Theme = "Papirus-Dark";
+    kde.settings.kdeglobals.UiSettings.ColorScheme = "qt6ct";
+  };
+
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
     };
 
     "org/gnome/shell/extensions/user-theme" = {
-      name = "Tokyonight-Dark";
+      name = "catppuccin-mocha-mauve-standard";
     };
   };
 

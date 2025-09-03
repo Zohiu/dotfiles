@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  pkgs-unstable,
+  pkgs-stable,
   inputs,
   hyprland,
   nix-flatpak,
@@ -65,8 +65,8 @@
   console.keyMap = "de";
 
   # Display Manager
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.enable = true;
+  services.displayManager.gdm.enable = true;
 
   # Programs
   programs.steam.enable = true; # Needs to be in system conf for alvr.
@@ -130,7 +130,7 @@
 
   home-manager = {
     extraSpecialArgs = {
-      inherit pkgs-unstable;
+      inherit pkgs-stable;
     };
   };
 
@@ -140,10 +140,10 @@
   # Additional packages
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    libsForQt5.qtsvg
+    kdePackages.qtsvg
     kdePackages.kio-fuse
-    libsForQt5.kio-extras
-    libsForQt5.ffmpegthumbs
+    kdePackages.kio-extras
+    kdePackages.ffmpegthumbs
     v4l-utils # For OBS virtual cam
   ];
 

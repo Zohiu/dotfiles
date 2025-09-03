@@ -13,7 +13,7 @@ in
   # AMD graphics
   hardware.graphics = {
     enable = true;
-    package = pkgs.mesa;
+    package = pkgs-hypr.mesa;
     extraPackages = with pkgs; [
       libva
       libvdpau-va-gl

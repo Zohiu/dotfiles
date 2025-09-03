@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, inputs, ... }:
+{ pkgs, pkgs-stable, inputs, ... }:
 let
   # Lossless scaling app for steam
 #   lsfg-vk = pkgs.stdenv.mkDerivation rec {
@@ -70,7 +70,7 @@ in
     with pkgs;
     [
       # GUI apps
-      pkgs-unstable.kitty
+      kitty
       mpv
       blueman
       firefox
@@ -87,9 +87,10 @@ in
       clipnotify
       xclip
 
-      libsForQt5.dolphin
-      libsForQt5.ark
-      libsForQt5.kate
+      # libsForQt5
+      kdePackages.dolphin
+      kdePackages.ark
+      kdePackages.kate
 
       moonlight-qt
       gimp
@@ -101,7 +102,7 @@ in
 
       obs-studio
       obsidian
-      pkgs-unstable.signal-desktop
+      signal-desktop
 
       # tidal-hifi
       spotify
@@ -115,7 +116,7 @@ in
       audacity
       qpwgraph
 
-      jellyfin-media-player
+      # jellyfin-media-player
       gnome-network-displays
       inkscape
 
@@ -180,6 +181,10 @@ in
       wlr-randr
       wineWowPackages.stable
       kdePackages.kservice
+      kdePackages.kimageformats
+      kdePackages.kdegraphics-thumbnailers
+      kdePackages.ffmpegthumbs
+      kdePackages.qtimageformats
       nixfmt-rfc-style
 
       # Job stuff

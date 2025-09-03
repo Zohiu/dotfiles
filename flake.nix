@@ -2,11 +2,11 @@
   description = "Zohiu's NixOS Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     # Home manager
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Flatpak for home manager
@@ -46,7 +46,7 @@
     {
       self,
       nixpkgs,
-      nixpkgs-unstable,
+      nixpkgs-stable,
       home-manager,
       nix-flatpak,
       catppuccin,
@@ -59,8 +59,8 @@
     }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-      pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+      pkgs = import nixpkgs { system = system; };
+      pkgs-stable = import nixpkgs-stable { system = system; };
     in
     {
       nixosConfigurations = {
@@ -71,7 +71,7 @@
             inherit hyprland;
             inherit nix-flatpak;
             inherit catppuccin;
-            inherit pkgs-unstable;
+            inherit pkgs-stable;
           };
           modules = [
             catppuccin.nixosModules.catppuccin
@@ -88,7 +88,7 @@
             inherit hyprland;
             inherit nix-flatpak;
             inherit catppuccin;
-            inherit pkgs-unstable;
+            inherit pkgs-stable;
           };
           modules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
@@ -107,7 +107,7 @@
             inherit hyprland;
             inherit nix-flatpak;
             inherit catppuccin;
-            inherit pkgs-unstable;
+            inherit pkgs-stable;
           };
           modules = [
             catppuccin.nixosModules.catppuccin
