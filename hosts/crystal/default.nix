@@ -46,7 +46,7 @@
       "application": [
         "${pkgs-unstable.wlx-overlay-s}/bin/wlx-overlay-s"
       ],
-      "bitrate": 50000000,
+      "bitrate": 60000000,
       "debug-gui": false,
       "encoders.disabled": [
         {
