@@ -5,6 +5,9 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
 
+    # VR packages
+    nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
+
     # Home manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -47,6 +50,7 @@
       self,
       nixpkgs,
       nixpkgs-stable,
+      nixpkgs-xr,
       home-manager,
       nix-flatpak,
       catppuccin,
@@ -74,6 +78,7 @@
             inherit pkgs-stable;
           };
           modules = [
+            nixpkgs-xr.nixosModules.nixpkgs-xr
             catppuccin.nixosModules.catppuccin
             home-manager.nixosModules.home-manager
             ./hosts/crystal
