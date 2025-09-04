@@ -17,7 +17,8 @@
         "application": [
           "${pkgs.wlx-overlay-s}/bin/wlx-overlay-s"
         ],
-        "bitrate": 60000000,
+        "scale": [0.75, 0.5],
+        "bitrate": 100000000,
         "debug-gui": false,
         "encoders.disabled": [
           {
