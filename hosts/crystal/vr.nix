@@ -6,9 +6,9 @@
     enable = true;
     defaultRuntime = true;
     package = pkgs.wivrn;
-    autoStart = true;
-    extraServerFlags = [ "--no-encrypt" ];  # I only use it in a local network.
-    config.enable = true;
+    # autoStart = true;
+    # extraServerFlags = [ "--no-encrypt" ];  # I only use it in a local network.
+    # config.enable = true;
   };
 
   home-manager.users.samy.xdg.configFile = {
