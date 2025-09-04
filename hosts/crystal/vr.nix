@@ -28,8 +28,13 @@
             "width": 1.0
           }
         ],
-        "use-steamvr-lh": false
+        "use-steamvr-lh": false,
+        "openvr-compat-path": "${pkgs.xrizer}/lib/xrizer"
       }
+    '';
+
+    "openvr/openvrpaths.vrpath".text = ''
+      {"runtime":["${pkgs.xrizer}/lib/xrizer"],"version":1}
     '';
 
     "wlxoverlay/wayvr.conf.d/dashboard.yaml".text = ''
