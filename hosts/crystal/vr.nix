@@ -33,6 +33,13 @@
       }
     '';
 
+    "wivrn/wivrn-dashboard.conf".text = ''
+      [General]
+      adb_custom=true
+      adb_location=${pkgs.android-tools}/bin/adb
+      first_run=false
+    '';
+
     "openvr/openvrpaths.vrpath".text = ''
       {"runtime":["${pkgs.xrizer}/lib/xrizer"],"version":1}
     '';
