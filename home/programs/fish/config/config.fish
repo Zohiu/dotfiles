@@ -22,7 +22,7 @@ function rebuild-update
 end
 
 function rebuild-commit
-    cd ~/dotfiles && addall && git commit $argv && push && sudo nixos-rebuild switch --flake ~/dotfiles#(hostname)
+    cd ~/dotfiles && addall && sudo nixos-rebuild switch --flake ~/dotfiles#(hostname) && git commit $argv && push
 end
 
 function reload-iscsi
