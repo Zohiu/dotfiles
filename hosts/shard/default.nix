@@ -7,6 +7,8 @@
     ../amd.nix
   ];
 
+  # boot.kernelPackages = pkgs.linuxPackages_zen;
+
   networking.hostName = "shard";
 
   hardware.framework.enableKmod = true;
@@ -65,6 +67,10 @@
     "amdgpu.dc=1"
     "amdgpu.deep_color=1"
     "amdgpu.runpm=1"
+
+    "ahci.mobile_lpm_policy=3"
+    "rtc_cmos.use_acpi_alarm=1"
+    "acpi.ec_no_wakeup=1"  # https://www.reddit.com/r/framework/comments/18c8yk7/high_battery_drain_when_sleeping_amd_13/
   ];
 
   #services.auto-cpufreq.enable = false; # Might conflict with tlp, but is allowed to be used at the same time.
