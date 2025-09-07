@@ -1,14 +1,37 @@
 { config, pkgs, pkgs-stable, ... }:
-
 {
+  # Overlays to use mesa instead of amdvlk when both are installed.
+  nixpkgs.overlays = [
+    (final: prev: {
+       wivrn = prev.wivrn.overrideAttrs (prevAttrs: {
+        nativeBuildInputs = (prevAttrs.nativeBuildInputs or []) ++ [ prev.makeBinaryWrapper ];
+
+        postInstall = (prevAttrs.postInstall or "") + ''
+          wrapProgram $out/bin/wivrn-dashboard --set AMD_VULKAN_ICD RADV
+        '';
+      });
+
+      bs-manager = prev.bs-manager.overrideAttrs (prevAttrs: {
+        nativeBuildInputs = (prevAttrs.nativeBuildInputs or []) ++ [ prev.makeBinaryWrapper ];
+
+        postInstall = (prevAttrs.postInstall or "") + ''
+          wrapProgram $out/bin/bs-manager --set AMD_VULKAN_ICD RADV
+        '';
+      });
+    })
+  ];
+
+  # VR apps
+  home-manager.users.samy.home.packages = [
+    pkgs.bs-manager
+  ];
+
+
   # VR streaming
   services.wivrn = {
     enable = true;
     defaultRuntime = true;
     package = pkgs.wivrn;
-    # autoStart = true;
-    # extraServerFlags = [ "--no-encrypt" ];  # I only use it in a local network.
-    # config.enable = true;
   };
 
   home-manager.users.samy.xdg.configFile = {
