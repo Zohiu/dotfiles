@@ -139,7 +139,11 @@
         "float,title:\\(DEBUG\\)$"
         "center,title:\\(DEBUG\\)$"
         "size 900 600,title:\\(DEBUG\\)$"
+
         "noinitialfocus, class:(jetbrains-)(.*), floating:1"
+
+        "float,class:org.pulseaudio.pavucontrol"
+        "float,title:pulsemixer"
       ];
 
       "$mainMod" = "SUPER";
@@ -149,7 +153,7 @@
         "$mainMod, RETURN, exec, kitty"
         "$mainMod, Q, killactive"
         "$mainMod, M, exit"
-        "$mainMod, X, exec, rofi -theme theme -show power-menu -modi power-menu:~/.config/rofi/rofi-power-menu"
+        "$mainMod, X, exec, rofi -theme theme -show power-menu -modi power-menu:rofi-power-menu"
         "$mainMod, E, exec, dolphin"
         "$mainMod, SPACE, togglefloating"
         "$mainMod, d, exec, rofi -theme theme -show drun"
@@ -235,8 +239,8 @@
     hyprpaper
     swww
     pavucontrol
+    pulsemixer
     easyeffects
-    playerctl
     wl-clipboard
     pamixer
     networkmanagerapplet

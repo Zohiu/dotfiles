@@ -27,7 +27,7 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       1000px;
+    width:                       600px;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -41,18 +41,12 @@ window {
 /*****----- Main Box -----*****/
 mainbox {
     enabled:                     true;
-    spacing:                     0px;
+    spacing:                     10px;
+    padding:                     10px;
     background-color:            transparent;
-    orientation:                 horizontal;
-    children:                    [ "imagebox", "listbox" ];
-}
-
-imagebox {
-    padding:                     20px;
-    background-color:            transparent;
-    background-image:            url("~/.config/rofi/rofi.png", height);
+    background-image:            url("~/.config/rofi/rofi.jpg", height);
     orientation:                 vertical;
-    children:                    [ "inputbar", "dummy", "mode-switcher" ];
+    children:                    [ "inputbar", "listbox", "mode-switcher" ];
 }
 
 listbox {
@@ -61,10 +55,6 @@ listbox {
     background-color:            transparent;
     orientation:                 vertical;
     children:                    [ "message", "listview" ];
-}
-
-dummy {
-    background-color:            transparent;
 }
 
 /*****----- Inputbar -----*****/
@@ -96,7 +86,7 @@ entry {
 /*****----- Mode Switcher -----*****/
 mode-switcher{
     enabled:                     true;
-    spacing:                     20px;
+    spacing:                     10px;
     background-color:            transparent;
     text-color:                  @foreground;
 }
@@ -116,7 +106,7 @@ button selected {
 listview {
     enabled:                     true;
     columns:                     1;
-    lines:                       8;
+    lines:                       10;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -125,7 +115,7 @@ listview {
     fixed-height:                true;
     fixed-columns:               true;
 
-    spacing:                     10px;
+    spacing:                     5px;
     background-color:            transparent;
     text-color:                  @foreground;
     cursor:                      "default";
@@ -135,7 +125,7 @@ listview {
 element {
     enabled:                     true;
     spacing:                     15px;
-    padding:                     8px;
+    padding:                     5px;
     border-radius:               10px;
     background-color:            transparent;
     text-color:                  @foreground;

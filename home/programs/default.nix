@@ -71,6 +71,8 @@ in
     [
       # GUI apps
       kitty
+      ghostty
+
       mpv
       blueman
       firefox
@@ -81,6 +83,7 @@ in
       qbittorrent
       # thunderbird
       gparted
+      qalculate-gtk
 
       monero-gui
       xmrig
@@ -167,7 +170,7 @@ in
       bat
       broot
       n-m3u8dl-re
-      ollama
+      libqalculate
 
       # TUI apps
       micro
