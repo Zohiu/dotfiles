@@ -187,11 +187,6 @@ let
     nix-shell -p yt-dlp --run "yt-dlp '$1' --add-metadata --cookies cookies.txt --embed-thumbnail -o '%(channel)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
   '';
 
-
-  fixbrightness = pkgs.writeShellScriptBin "fixbrightness" ''
-    sudo chmod a+rw /sys/class/backlight/amdgpu_bl1/brightness
-  '';
-
   brightness = pkgs.writeShellScriptBin "brightness" ''
     # Taken from https://github.com/MasterDevX/linux-backlight-controller/tree/master
     backlight_class=/sys/class/backlight/
@@ -231,7 +226,6 @@ in
     wallpaper_random
     aniworld
     ytdl
-    fixbrightness
     brightness
     rust_create_project
   ];
