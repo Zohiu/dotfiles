@@ -63,9 +63,9 @@
       first_run=false
     '';
 
-    "openvr/openvrpaths.vrpath".text = ''
-      {"runtime":["${pkgs.xrizer}/lib/xrizer"],"version":1}
-    '';
+    #"openvr/openvrpaths.vrpath".text = ''
+    #  {"runtime":["${pkgs.xrizer}/lib/xrizer"],"version":1}
+    #'';
 
     "wlxoverlay/wayvr.conf.d/dashboard.yaml".text = ''
       dashboard:
