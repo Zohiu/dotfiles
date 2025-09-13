@@ -197,9 +197,11 @@
         if [ "$charging" = "1" ]; then
           ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@120, auto, auto"
           ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 1
+          ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 1
         else
           ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@60, auto, auto"
           ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 0
+          ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 0
         fi
       '';
     };

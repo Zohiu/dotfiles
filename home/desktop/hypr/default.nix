@@ -43,10 +43,6 @@
 
       input = {
         kb_layout = "de";
-        kb_options = "";
-        kb_variant = "";
-        kb_model = "";
-        kb_rules = "";
         follow_mouse = 1;
         sensitivity = 1.0;
         accel_profile = "flat";
@@ -55,6 +51,7 @@
 
         touchpad = {
           natural_scroll = true;
+          disable_while_typing = false;
           scroll_factor = 0.8;
         };
       };
@@ -71,7 +68,7 @@
       decoration = {
         rounding = 10;
         blur = {
-          enabled = false;
+          enabled = true;
         };
         shadow = {
           enabled = false;
