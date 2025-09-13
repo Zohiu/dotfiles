@@ -134,6 +134,10 @@
         };
       };
 
+      layerrule = [
+        "noanim,^(rofi)$"
+      ];
+
       windowrulev2 = [
         "tile,class:^(Godot)$"
         "float,title:\\(DEBUG\\)$"
@@ -143,7 +147,7 @@
         "noinitialfocus, class:(jetbrains-)(.*), floating:1"
 
         "float,class:org.pulseaudio.pavucontrol"
-        "float,title:pulsemixer"
+        "size 800 600,class:org.pulseaudio.pavucontrol"
       ];
 
       "$mainMod" = "SUPER";
@@ -153,7 +157,8 @@
         "$mainMod, RETURN, exec, kitty"
         "$mainMod, Q, killactive"
         "$mainMod, M, exit"
-        "$mainMod, X, exec, rofi -theme theme -show power-menu -modi power-menu:rofi-power-menu"
+        "$mainMod, X, exec, rofi -show power-menu -modi power-menu:rofi-power-menu"
+        "$mainMod, I, exec, rofi-main-menu"
         "$mainMod, E, exec, dolphin"
         "$mainMod, SPACE, togglefloating"
         "$mainMod, d, exec, rofi -theme theme -show drun"
@@ -239,7 +244,6 @@
     hyprpaper
     swww
     pavucontrol
-    pulsemixer
     easyeffects
     wl-clipboard
     pamixer

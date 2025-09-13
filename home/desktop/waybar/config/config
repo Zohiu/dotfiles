@@ -64,7 +64,7 @@
         ]
       },
       "format-muted": "󰖁 Muted",
-      "on-click": "kitty -e pulsemixer",
+      "on-click": "pavucontrol",
       "scroll-step": 0,
       "tooltip": false
     },
