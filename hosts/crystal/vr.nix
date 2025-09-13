@@ -26,7 +26,6 @@
     pkgs.bs-manager
   ];
 
-
   # VR streaming
   services.wivrn = {
     enable = true;
