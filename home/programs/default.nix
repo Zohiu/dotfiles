@@ -48,7 +48,7 @@ in
 
   services.flatpak.packages = [
     "com.bktus.gpgfrontend"
-    "org.prismlauncher.PrismLauncher"
+    # "org.prismlauncher.PrismLauncher"
     "io.github.MakovWait.Godots"
     "com.github.tchx84.Flatseal"
     "org.jdownloader.JDownloader"
@@ -102,6 +102,7 @@ in
       osu-lazer
       umu-launcher
       protonplus
+      prismlauncher
 
       obs-studio
       obsidian
