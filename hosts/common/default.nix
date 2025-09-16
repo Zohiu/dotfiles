@@ -13,6 +13,7 @@
   imports = [
     ./filesystems.nix
     ./networking.nix
+    ./mime.nix
   ];
 
   nix.settings.experimental-features = [

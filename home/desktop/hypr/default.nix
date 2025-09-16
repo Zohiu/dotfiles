@@ -5,10 +5,6 @@
   ...
 }:
 {
-  imports = [
-    ./mime.nix
-  ];
-
   # Takes inputs from flake.nix!
   wayland.windowManager.hyprland = {
     enable = true;
