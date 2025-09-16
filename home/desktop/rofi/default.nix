@@ -21,7 +21,7 @@ let
 in
 {
   home.packages = with pkgs; [
-    rofi-wayland
+    rofi
     rofi-power-menu
     networkmanager_dmenu
 

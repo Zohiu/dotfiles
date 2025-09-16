@@ -107,6 +107,7 @@ in
       obs-studio
       obsidian
       signal-desktop
+      cemu
 
       # tidal-hifi
       spotify
