@@ -39,16 +39,30 @@
         "application": [
           "${pkgs.wlx-overlay-s}/bin/wlx-overlay-s"
         ],
-        "scale": [0.75, 0.75],
-        "bitrate": 115000000,
+        "scale": [0.5, 0.25],
+        "bitrate": 125000000,
         "debug-gui": false,
-        "encoders.disabled": [
-          {
-            "height": 1.0,
-            "offset_x": 0.0,
-            "offset_y": 0.0,
-            "width": 1.0
-          }
+        "encoders": [
+            {
+              "height": 0.25,
+              "offset_x": 0.0,
+              "offset_y": 0.75,
+              "width": 0.5
+            },
+            {
+              "height": 0.75,
+              "offset_x": 0.0,
+              "offset_y": 0.0,
+              "width": 0.5
+            },
+            {
+              "codec": "h264",
+              "encoder": "x264",
+              "height": 1.0,
+              "offset_x": 0.5,
+              "offset_y": 0.0,
+              "width": 0.5
+            }
         ],
         "use-steamvr-lh": false,
         "openvr-compat-path": "${pkgs.xrizer}/lib/xrizer"
