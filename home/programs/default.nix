@@ -53,6 +53,7 @@ in
     "com.github.tchx84.Flatseal"
     "org.jdownloader.JDownloader"
     "org.vinegarhq.Sober"
+    "io.github.betaflight.BetaflightConfigurator"
 
     { appId = "com.brave.Browser"; origin = "flathub";  }
   ];
@@ -133,6 +134,7 @@ in
       # jellyfin-media-player
       gnome-network-displays
       inkscape
+      # betaflight-configurator
 
       # DVD/Blu-Ray ripping
       makemkv
