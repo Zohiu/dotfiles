@@ -155,6 +155,7 @@
         "$mainMod, E, exec, dolphin"
         "$mainMod, SPACE, togglefloating"
         "$mainMod, d, exec, rofi -theme theme -show drun"
+        "$mainMod, r, exec, rofi -theme theme -show run"
         "$mainMod, J, togglesplit"
 
         "$mainMod SHIFT, S, exec, grim -g \"$(slurp -d)\" - | wl-copy"

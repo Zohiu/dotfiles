@@ -187,12 +187,84 @@ let
     nix-shell -p yt-dlp --run "yt-dlp '$1' --add-metadata --cookies cookies.txt --embed-thumbnail -o '%(channel)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
   '';
 
-  wiicapture = pkgs.writeShellScriptBin "wiicapture" ''
-    pw-loopback -C alsa_input.usb-MACROSILICON_USB3.0_Capture-02.analog-stereo &
+  hdmiplay = pkgs.writeShellScriptBin "hdmiplay" ''
+    # Old version (Benefits from MPV upscaling shaders, but way more input lag on bad hardware.)
+    # mpv av://v4l2:$1 --demuxer=lavf --demuxer-lavf-o=video_size=1280x720,framerate=60,input_format=mjpeg --profile=low-latency --keepaspect=no --vf="hqdn3d=3.0:2.0:4.0:3.0,pp=lb,unsharp=5:5:0.8"
+    set -u
+    shopt -s nullglob
 
-    mpv av://v4l2:$1 --demuxer=lavf --demuxer-lavf-o=video_size=1280x720,framerate=60,input_format=mjpeg --profile=low-latency --keepaspect=no --vf="hqdn3d=3.0:2.0:4.0:3.0,pp=lb,unsharp=5:5:0.8"
+    PW_LOOPBACK_NAME="alsa_input.usb-MACROSILICON_USB3.0_Capture-02.analog-stereo"
 
-    pkill pw-loopback
+    # start PipeWire loopback in background
+    pw-loopback -C "$PW_LOOPBACK_NAME" &
+    PW_PID=$!
+
+    # clean up on exit
+    trap 'kill "$PW_PID" 2>/dev/null || true' EXIT
+
+    # normalize argument: allow "0" or "/dev/video0"
+    resolve_device_arg() {
+        arg="$1"
+        case "$arg" in
+            [0-9]*) echo "/dev/video$arg" ;;
+            *)      echo "$arg" ;;
+        esac
+    }
+
+    # probe a device quickly with ffmpeg
+    test_device() {
+        dev="$1"
+        if command -v timeout >/dev/null 2>&1; then
+            timeout 3s ffmpeg -hide_banner -loglevel error \
+                -f v4l2 -framerate 60 -video_size 1280x720 -input_format mjpeg \
+                -i "$dev" -frames:v 1 -f null - >/dev/null 2>&1
+            return $?
+        else
+            ffmpeg -hide_banner -loglevel error \
+                -f v4l2 -framerate 60 -video_size 1280x720 -input_format mjpeg \
+                -i "$dev" -frames:v 1 -f null - >/dev/null 2>&1 &
+            ffpid=$!
+            sleep 3
+            kill "$ffpid" 2>/dev/null || true
+            wait "$ffpid" 2>/dev/null || true
+            [ -c "$dev" ] && return 0 || return 1
+        fi
+    }
+
+    # pick device
+    if [ $# -gt 0 ]; then
+        DEV="$(resolve_device_arg "$1")"
+        echo "Using provided device: $DEV"
+        if ! test_device "$DEV"; then
+            echo "ERROR: provided device '$DEV' failed probe." >&2
+            exit 1
+        fi
+    else
+        echo "No device supplied, probing /dev/video*..."
+        DEV=""
+        for d in /dev/video*; do
+            echo -n " Testing $d ... "
+            if test_device "$d"; then
+                DEV="$d"
+                echo "OK"
+                echo "Using device: $DEV"
+                break
+            else
+                echo "fail"
+            fi
+        done
+        if [ -z "$DEV" ]; then
+            echo "No usable video device found." >&2
+            exit 1
+        fi
+    fi
+
+    # 720p, yes. It gets a bit laggy at higher resolutions. I tried using this for Switch and it honestly looks good enough.
+    ffplay -f v4l2 -video_size 1280x720 -framerate 60 \
+       -input_format mjpeg \
+       -fflags nobuffer -flags low_delay \
+       -probesize 32 -analyzeduration 0 \
+       -framedrop -fs "$DEV"
   '';
 
   brightness = pkgs.writeShellScriptBin "brightness" ''
@@ -234,7 +306,7 @@ in
     wallpaper_random
     aniworld
     ytdl
-    wiicapture
+    hdmiplay
     brightness
     rust_create_project
   ];
