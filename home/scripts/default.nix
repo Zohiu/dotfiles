@@ -195,13 +195,6 @@ let
 
     PW_LOOPBACK_NAME="alsa_input.usb-MACROSILICON_USB3.0_Capture-02.analog-stereo"
 
-    # start PipeWire loopback in background
-    pw-loopback -C "$PW_LOOPBACK_NAME" &
-    PW_PID=$!
-
-    # clean up on exit
-    trap 'kill "$PW_PID" 2>/dev/null || true' EXIT
-
     # normalize argument: allow "0" or "/dev/video0"
     resolve_device_arg() {
         arg="$1"
@@ -213,23 +206,22 @@ let
 
     # probe a device quickly with ffmpeg
     test_device() {
-        dev="$1"
-        if command -v timeout >/dev/null 2>&1; then
-            timeout 3s ffmpeg -hide_banner -loglevel error \
-                -f v4l2 -framerate 60 -video_size 1280x720 -input_format mjpeg \
-                -i "$dev" -frames:v 1 -f null - >/dev/null 2>&1
-            return $?
-        else
-            ffmpeg -hide_banner -loglevel error \
-                -f v4l2 -framerate 60 -video_size 1280x720 -input_format mjpeg \
-                -i "$dev" -frames:v 1 -f null - >/dev/null 2>&1 &
-            ffpid=$!
-            sleep 3
-            kill "$ffpid" 2>/dev/null || true
-            wait "$ffpid" 2>/dev/null || true
-            [ -c "$dev" ] && return 0 || return 1
-        fi
-    }
+    dev="$1"
+
+    # Must be a character device; if not, return 1 (error)
+    [ -c "$dev" ] || return 1
+
+    # Run ffmpeg probe, discarding all output.
+    # The exit status is what matters.
+    ffmpeg -hide_banner -loglevel error \
+           -f v4l2 -video_size 1280x720 -framerate 60 -input_format mjpeg \
+           -i "$dev" -frames:v 1 -f null - > /dev/null 2>&1
+
+    # Return the exit status of the ffmpeg command.
+    # 0 = success, non-zero = failure.
+    return $?
+}
+
 
     # pick device
     if [ $# -gt 0 ]; then
@@ -258,6 +250,13 @@ let
             exit 1
         fi
     fi
+
+    # start PipeWire loopback in background
+    pw-loopback -C "$PW_LOOPBACK_NAME" &
+    PW_PID=$!
+
+    # clean up on exit
+    trap 'kill "$PW_PID" 2>/dev/null || true' EXIT
 
     # 720p, yes. It gets a bit laggy at higher resolutions. I tried using this for Switch and it honestly looks good enough.
     ffplay -f v4l2 -video_size 1280x720 -framerate 60 \
