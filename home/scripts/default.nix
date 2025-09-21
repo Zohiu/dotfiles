@@ -187,6 +187,14 @@ let
     nix-shell -p yt-dlp --run "yt-dlp '$1' --add-metadata --cookies cookies.txt --embed-thumbnail -o '%(channel)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
   '';
 
+  wiicapture = pkgs.writeShellScriptBin "wiicapture" ''
+    pw-loopback -C alsa_input.usb-MACROSILICON_USB3.0_Capture-02.analog-stereo &
+
+    mpv av://v4l2:$1 --demuxer=lavf --demuxer-lavf-o=video_size=1280x720,framerate=60,input_format=mjpeg --profile=low-latency --keepaspect=no --vf="hqdn3d=3.0:2.0:4.0:3.0,pp=lb,unsharp=5:5:0.8"
+
+    pkill pw-loopback
+  '';
+
   brightness = pkgs.writeShellScriptBin "brightness" ''
     # Taken from https://github.com/MasterDevX/linux-backlight-controller/tree/master
     backlight_class=/sys/class/backlight/
@@ -226,6 +234,7 @@ in
     wallpaper_random
     aniworld
     ytdl
+    wiicapture
     brightness
     rust_create_project
   ];
