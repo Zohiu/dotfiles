@@ -64,6 +64,16 @@ in
       };
     };
 
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      wlrobs
+      obs-backgroundremoval
+      obs-shaderfilter
+      obs-pipewire-audio-capture
+    ];
+  };
+
 
   # Also need to rebuild nix to fix dolphin MIME
   home.packages = (
@@ -104,7 +114,6 @@ in
       protonplus
       prismlauncher
 
-      obs-studio
       obsidian
       signal-desktop
       cemu
@@ -158,6 +167,9 @@ in
       curl
       direnv
       go
+      (pkgs.python3.withPackages (python-pkgs: [
+        python-pkgs.pip
+      ]))
 
       # Fun tools
       nitch
