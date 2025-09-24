@@ -148,6 +148,14 @@
     v4l-utils # For OBS virtual cam
   ];
 
+  # Allow dynamically linked executables
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    # Add any missing dynamic libraries for unpackaged programs
+    # here, NOT in environment.systemPackages
+    icu
+  ];
+
   # Fonts
   fonts.packages = with pkgs; [
     nerd-fonts.droid-sans-mono
