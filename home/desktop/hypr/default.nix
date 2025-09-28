@@ -20,16 +20,13 @@
 
     settings = {
       exec-once = [
-        "sunshine"
         "hyprctl setcursor Bibata-Modern-Classic 24"
         "dunst"
         "easyeffects --gapplication-service"
-        "swww init && exec wallpaper_random"
-        "while true; do sleep 300; wallpaper_random; done"
         "wl-paste -t text --watch clipman store --no-persist"
         "systemctl --user start hyprpolkitagent"
         "hyprpaper"
-        "udiskie --automount --notify --mount-options sync"
+        "udiskie --automount --notify"
       ];
 
       exec = [
