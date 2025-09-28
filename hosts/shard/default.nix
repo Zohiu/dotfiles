@@ -73,9 +73,9 @@
       RADEON_DPM_PERF_LEVEL_ON_BAT="low";
 
       # Wifi power saving
-      WIFI_PWR_ON_AC="off";
-      WIFI_PWR_ON_BAT="on";
-      WOL_DISABLE="Y";
+      #WIFI_PWR_ON_AC="off";
+      #WIFI_PWR_ON_BAT="on";
+      #WOL_DISABLE="Y";
 
       SOUND_POWER_SAVE_ON_AC=0;
       SOUND_POWER_SAVE_ON_BAT=1;
@@ -112,60 +112,9 @@
 
     "ahci.mobile_lpm_policy=3"
     "rtc_cmos.use_acpi_alarm=1"
-    "acpi.ec_no_wakeup=1"  # https://www.reddit.com/r/framework/comments/18c8yk7/high_battery_drain_when_sleeping_amd_13/
   ];
 
-  #services.auto-cpufreq.enable = false; # Might conflict with tlp, but is allowed to be used at the same time.
-  #services.auto-cpufreq.settings = {
-  #  battery = {
-  #    governor = "powersave";
-  #    turbo = "never";
-  #  };
-  #  charger = {
-  #    governor = "performance";
-  #    turbo = "auto";
-  #  };
-  #};
-
-  # Enable fw-fanctrl (framework fancontrol)
-  # programs.fw-fanctrl.enable = true;
-
-  # Add a custom config
-#   programs.fw-fanctrl.config = {
-#     defaultStrategy = "lazy";
-#     strategies = {
-#       "lazy" = {
-#         fanSpeedUpdateFrequency = 5;
-#         movingAverageInterval = 30;
-#         speedCurve = [
-#           {
-#             temp = 0;
-#             speed = 0;
-#           }
-#           {
-#             temp = 40;
-#             speed = 15;
-#           }
-#           {
-#             temp = 65;
-#             speed = 25;
-#           }
-#           {
-#             temp = 70;
-#             speed = 35;
-#           }
-#           {
-#             temp = 75;
-#             speed = 50;
-#           }
-#           {
-#             temp = 85;
-#             speed = 100;
-#           }
-#         ];
-#       };
-#     };
-#   };
+  networking.networkmanager.wifi.powersave = false;
 
   # Home Manager overrides
   home-manager.users.samy.wayland.windowManager.hyprland.settings = {
