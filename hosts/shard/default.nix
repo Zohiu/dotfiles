@@ -20,12 +20,10 @@
   };
 
   # Ignore the power key
-  #services.logind.extraConfig = ''
-  #  # don’t shutdown when power button is short-pressed
-  #  HandlePowerKey=ignore
-  #  HandleSuspendKey=ignore
-  #  HandleHibernateKey=ignore
-  #'';
+  services.logind.settings.Login = {
+    HandlePowerKey = "ignore";    HandleSuspendKey = "ignore";
+    HandleHibernateKey = "ignore";
+  };
 
   services.fprintd.enable = true;
 
