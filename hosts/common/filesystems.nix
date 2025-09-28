@@ -31,7 +31,7 @@
             "nocase"
             "cache=loose"
             "x-systemd.idle-timeout=60"
-            "x-systemd.device-timeout=5s"
+            "x-systemd.device-timeout=10s"
             "x-systemd.mount-timeout=5s"
           ];
       in [ "${automountOpts},credentials=/home/samy/.truenas-secrets" ];
