@@ -5,6 +5,7 @@
   ...
 }:
 {
+
   # Takes inputs from flake.nix!
   wayland.windowManager.hyprland = {
     enable = true;
@@ -28,6 +29,7 @@
         "wl-paste -t text --watch clipman store --no-persist"
         "systemctl --user start hyprpolkitagent"
         "hyprpaper"
+        "udiskie --automount --notify --mount-options sync"
       ];
 
       exec = [
@@ -155,7 +157,6 @@
         "$mainMod, E, exec, dolphin"
         "$mainMod, SPACE, togglefloating"
         "$mainMod, d, exec, rofi -theme theme -show drun"
-        "$mainMod, r, exec, rofi -theme theme -show run"
         "$mainMod, J, togglesplit"
 
         "$mainMod SHIFT, S, exec, grim -g \"$(slurp -d)\" - | wl-copy"
