@@ -241,6 +241,7 @@
     pamixer
     networkmanagerapplet
     papirus-folders
+    xorg.xhost
   ];
 
   #qt = {

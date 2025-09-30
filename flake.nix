@@ -43,6 +43,10 @@
     # Lossless scaling
     lsfg-vk-flake.url = "github:pabloaul/lsfg-vk-flake/main";
     lsfg-vk-flake.inputs.nixpkgs.follows = "nixpkgs";
+
+    #
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -59,6 +63,7 @@
       nixos-hardware,
       fw-fanctrl,
       lsfg-vk-flake,
+      nix-index-database,
       ...
     }@inputs:
     let
@@ -80,6 +85,7 @@
           modules = [
             nixpkgs-xr.nixosModules.nixpkgs-xr
             catppuccin.nixosModules.catppuccin
+            nix-index-database.nixosModules.nix-index
             home-manager.nixosModules.home-manager
             ./hosts/crystal
             lsfg-vk-flake.nixosModules.default
@@ -99,6 +105,7 @@
             nixos-hardware.nixosModules.framework-13-7040-amd
             fw-fanctrl.nixosModules.default
             catppuccin.nixosModules.catppuccin
+            nix-index-database.nixosModules.nix-index
             home-manager.nixosModules.home-manager
             ./hosts/shard
             lsfg-vk-flake.nixosModules.default
@@ -116,6 +123,7 @@
           };
           modules = [
             catppuccin.nixosModules.catppuccin
+            nix-index-database.nixosModules.nix-index
             home-manager.nixosModules.home-manager
             ./hosts/tv
             lsfg-vk-flake.nixosModules.default
