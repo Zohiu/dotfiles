@@ -242,6 +242,7 @@
     networkmanagerapplet
     papirus-folders
     xorg.xhost
+    xwayland
   ];
 
   #qt = {
