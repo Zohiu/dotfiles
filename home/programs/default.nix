@@ -107,7 +107,7 @@ in
       kdePackages.kate
 
       moonlight-qt
-      gimp
+      gimp3
       discord
       virt-viewer
       osu-lazer

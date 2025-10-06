@@ -146,6 +146,7 @@
     kdePackages.kio-extras
     kdePackages.ffmpegthumbs
     v4l-utils # For OBS virtual cam
+    webkitgtk_4_1
   ];
 
   # Allow dynamically linked executables
