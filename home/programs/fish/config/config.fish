@@ -8,8 +8,10 @@ alias reload 'source ~/.config/fish/config.fish'
 
 # NixOS
 function rebuild-test
+    set before $PWD
     cd ~/dotfiles && addall && sudo nixos-rebuild test --flake ~/dotfiles#(hostname) $argv
     reload
+    cd $before
 end
 
 function rebuild-test-reboot
@@ -18,11 +20,15 @@ function rebuild-test-reboot
 end
 
 function rebuild-update
+    set before $PWD
     cd ~/dotfiles && git pull --rebase && sudo nixos-rebuild switch --flake ~/dotfiles#(hostname)
+    cd $before
 end
 
 function rebuild-commit
+    set before $PWD
     cd ~/dotfiles && addall && sudo nixos-rebuild switch --flake ~/dotfiles#(hostname) && git commit $argv && push
+    cd $before
 end
 
 function reload-iscsi
