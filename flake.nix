@@ -49,86 +49,15 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      nixpkgs-stable,
-      nixpkgs-xr,
-      home-manager,
-      nix-flatpak,
-      catppuccin,
-      hyprland,
-      split-monitor-workspaces,
-      nixos-hardware,
-      fw-fanctrl,
-      lsfg-vk-flake,
-      nix-index-database,
-      ...
-    }@inputs:
+  outputs = inputs:
     let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { system = system; };
-      pkgs-stable = import nixpkgs-stable { system = system; };
-    in
+      globals = { user = "samy"; };
+    in rec
     {
       nixosConfigurations = {
-        crystal = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            inherit home-manager;
-            inherit hyprland;
-            inherit nix-flatpak;
-            inherit catppuccin;
-            inherit pkgs-stable;
-          };
-          modules = [
-            nixpkgs-xr.nixosModules.nixpkgs-xr
-            catppuccin.nixosModules.catppuccin
-            nix-index-database.nixosModules.nix-index
-            home-manager.nixosModules.home-manager
-            ./hosts/crystal
-            lsfg-vk-flake.nixosModules.default
-          ];
-        };
-
-        shard = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            inherit home-manager;
-            inherit hyprland;
-            inherit nix-flatpak;
-            inherit catppuccin;
-            inherit pkgs-stable;
-          };
-          modules = [
-            nixos-hardware.nixosModules.framework-13-7040-amd
-            fw-fanctrl.nixosModules.default
-            catppuccin.nixosModules.catppuccin
-            nix-index-database.nixosModules.nix-index
-            home-manager.nixosModules.home-manager
-            ./hosts/shard
-            lsfg-vk-flake.nixosModules.default
-          ];
-        };
-
-        tv = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            inherit home-manager;
-            inherit hyprland;
-            inherit nix-flatpak;
-            inherit catppuccin;
-            inherit pkgs-stable;
-          };
-          modules = [
-            catppuccin.nixosModules.catppuccin
-            nix-index-database.nixosModules.nix-index
-            home-manager.nixosModules.home-manager
-            ./hosts/tv
-            lsfg-vk-flake.nixosModules.default
-          ];
-        };
+        crystal = import ./hosts/crystal { inherit inputs globals; };
+        shard = import ./hosts/shard { inherit inputs globals; };
+        tv = import ./hosts/tv { inherit inputs globals; };
       };
     };
 }

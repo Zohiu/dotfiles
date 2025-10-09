@@ -1,169 +1,185 @@
-{ config, pkgs, ... }:
+{ inputs, globals, ... }:
+let 
+  system = "x86_64-linux";
+  pkgs = import inputs.nixpkgs { system = system; };
+  pkgs-stable = import inputs.nixpkgs-stable { system = system; };
+in
+inputs.nixpkgs.lib.nixosSystem rec {
+  specialArgs = {
+    inherit inputs globals;
+  };
 
-{
-  imports = [
+  modules = [
+    inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+    inputs.fw-fanctrl.nixosModules.default
+    inputs.catppuccin.nixosModules.catppuccin
+    inputs.nix-index-database.nixosModules.nix-index
+    inputs.home-manager.nixosModules.home-manager
+    inputs.lsfg-vk-flake.nixosModules.default
+
     ./hardware.nix
     ../common
     ../amd.nix
-  ];
+    {
+      networking.hostName = "shard";
 
-  # boot.kernelPackages = pkgs.linuxPackages_zen;
+      hardware.framework.enableKmod = true;
+      services.fwupd.enable = true;
 
-  networking.hostName = "shard";
+      # Suspend when laptop lid is closed
+      services.logind = {
+        lidSwitch = "suspend";
+      };
 
-  hardware.framework.enableKmod = true;
-  services.fwupd.enable = true;
+      # Ignore the power key
+      services.logind.settings.Login = {
+        HandlePowerKey = "ignore";    HandleSuspendKey = "ignore";
+        HandleHibernateKey = "ignore";
+      };
 
-  # Suspend when laptop lid is closed
-  services.logind = {
-    lidSwitch = "suspend";
-  };
+      services.fprintd.enable = true;
 
-  # Ignore the power key
-  services.logind.settings.Login = {
-    HandlePowerKey = "ignore";    HandleSuspendKey = "ignore";
-    HandleHibernateKey = "ignore";
-  };
+      # Latptop adjustments
+      # services.cpupower-gui.enable = true;
+      # powerManagement.cpuFreqGovernor = "schedutil";
+      powerManagement.powertop.enable = true;
+      services.thermald.enable = true;
 
-  services.fprintd.enable = true;
+      # See https://gist.github.com/pauloromeira/787c75d83777098453f5c2ed7eafa42a
+      services.power-profiles-daemon.enable = false;
+      services.tlp = {
+        enable = true;
+        settings = {
+          DISK_IDLE_SECS_ON_AC=0;
+          DISK_IDLE_SECS_ON_BAT=2;
 
-  # Latptop adjustments
-  # services.cpupower-gui.enable = true;
-  # powerManagement.cpuFreqGovernor = "schedutil";
-  powerManagement.powertop.enable = true;
-  services.thermald.enable = true;
+          MAX_LOST_WORK_SECS_ON_AC=15;
+          MAX_LOST_WORK_SECS_ON_BAT=60;
 
-  # See https://gist.github.com/pauloromeira/787c75d83777098453f5c2ed7eafa42a
-  services.power-profiles-daemon.enable = false;
-  services.tlp = {
-    enable = true;
-    settings = {
-      DISK_IDLE_SECS_ON_AC=0;
-      DISK_IDLE_SECS_ON_BAT=2;
+          CPU_SCALING_GOVERNOR_ON_AC = "performance";
+          CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
 
-      MAX_LOST_WORK_SECS_ON_AC=15;
-      MAX_LOST_WORK_SECS_ON_BAT=60;
+          CPU_HWP_ON_AC="balance_performance";
+          CPU_HWP_ON_BAT="balance_power";
 
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+          SCHED_POWERSAVE_ON_AC=0;
+          SCHED_POWERSAVE_ON_BAT=1;
 
-      CPU_HWP_ON_AC="balance_performance";
-      CPU_HWP_ON_BAT="balance_power";
+          NMI_WATCHDOG=0;
 
-      SCHED_POWERSAVE_ON_AC=0;
-      SCHED_POWERSAVE_ON_BAT=1;
+          ENERGY_PERF_POLICY_ON_AC="performance";
+          ENERGY_PERF_POLICY_ON_BAT="powersave";
 
-      NMI_WATCHDOG=0;
+          PCIE_ASPM_ON_AC="performance";
+          PCIE_ASPM_ON_BAT="powersave";
 
-      ENERGY_PERF_POLICY_ON_AC="performance";
-      ENERGY_PERF_POLICY_ON_BAT="powersave";
+          RADEON_POWER_PROFILE_ON_AC="high";
+          RADEON_POWER_PROFILE_ON_BAT="low";
 
-      PCIE_ASPM_ON_AC="performance";
-      PCIE_ASPM_ON_BAT="powersave";
+          RADEON_DPM_STATE_ON_AC="performance";
+          RADEON_DPM_STATE_ON_BAT="battery";
 
-      RADEON_POWER_PROFILE_ON_AC="high";
-      RADEON_POWER_PROFILE_ON_BAT="low";
+          RADEON_DPM_PERF_LEVEL_ON_AC="auto";
+          RADEON_DPM_PERF_LEVEL_ON_BAT="low";
 
-      RADEON_DPM_STATE_ON_AC="performance";
-      RADEON_DPM_STATE_ON_BAT="battery";
+          # Wifi power saving
+          #WIFI_PWR_ON_AC="off";
+          #WIFI_PWR_ON_BAT="on";
+          #WOL_DISABLE="Y";
 
-      RADEON_DPM_PERF_LEVEL_ON_AC="auto";
-      RADEON_DPM_PERF_LEVEL_ON_BAT="low";
+          SOUND_POWER_SAVE_ON_AC=0;
+          SOUND_POWER_SAVE_ON_BAT=1;
+          SOUND_POWER_SAVE_CONTROLLER="Y";
 
-      # Wifi power saving
-      #WIFI_PWR_ON_AC="off";
-      #WIFI_PWR_ON_BAT="on";
-      #WOL_DISABLE="Y";
+          RUNTIME_PM_ON_AC="on";
+          RUNTIME_PM_ON_BAT="auto";
 
-      SOUND_POWER_SAVE_ON_AC=0;
-      SOUND_POWER_SAVE_ON_BAT=1;
-      SOUND_POWER_SAVE_CONTROLLER="Y";
+          USB_AUTOSUSPEND=1;
 
-      RUNTIME_PM_ON_AC="on";
-      RUNTIME_PM_ON_BAT="auto";
+          # Autosuspend: 0=do not exclude, 1=exclude
+          USB_BLACKLIST_BTUSB=0;
+          USB_BLACKLIST_PHONE=0;
+          USB_BLACKLIST_WWAN=1;
 
-      USB_AUTOSUSPEND=1;
+          START_CHARGE_THRESH_BAT0 = 90;
+          STOP_CHARGE_THRESH_BAT0 = 97;
 
-      # Autosuspend: 0=do not exclude, 1=exclude
-      USB_BLACKLIST_BTUSB=0;
-      USB_BLACKLIST_PHONE=0;
-      USB_BLACKLIST_WWAN=1;
+          CPU_BOOST_ON_AC = 1;
+          CPU_BOOST_ON_BAT = 0;
+        };
+      };
 
-      START_CHARGE_THRESH_BAT0 = 90;
-      STOP_CHARGE_THRESH_BAT0 = 97;
+      boot.kernelParams = [
+        "radeon.dpm=1"  # needed for tlp RADEON_DPM_STATE
 
-      CPU_BOOST_ON_AC = 1;
-      CPU_BOOST_ON_BAT = 0;
-    };
-  };
+        # Tickless / scheduler tuning
+        "nohz_full=1-12"          # Replace N with your last CPU (exclude CPU0)
+        "rcu_nocbs=1-12"          # Offload RCU callbacks from isolated CPUs
+        # AMD GPU power management
+        "amdgpu.dc=1"
+        "amdgpu.deep_color=1"
+        "amdgpu.runpm=1"
 
-  boot.kernelParams = [
-    "radeon.dpm=1"  # needed for tlp RADEON_DPM_STATE
+        "ahci.mobile_lpm_policy=3"
+        "rtc_cmos.use_acpi_alarm=1"
+      ];
 
-    # Tickless / scheduler tuning
-    "nohz_full=1-12"          # Replace N with your last CPU (exclude CPU0)
-    "rcu_nocbs=1-12"          # Offload RCU callbacks from isolated CPUs
-    # AMD GPU power management
-    "amdgpu.dc=1"
-    "amdgpu.deep_color=1"
-    "amdgpu.runpm=1"
+      networking.networkmanager.wifi.powersave = false;
 
-    "ahci.mobile_lpm_policy=3"
-    "rtc_cmos.use_acpi_alarm=1"
-  ];
+      # Home Manager overrides
+      home-manager.users.${globals.user} = {
+        home.stateVersion = "24.11";
+        wayland.windowManager.hyprland.settings = {
+          exec = [
+            # Fix backlight
+            "sudo chmod a+rw /sys/class/backlight/amdgpu_bl1/brightness"
+            # Update charging status
+            "sudo systemctl start charger"
+          ];
 
-  networking.networkmanager.wifi.powersave = false;
+          monitor = [
+            # Also update this in the systemd charger service.
+            "eDP-1, 2880x1920@120, auto, auto"
+          ];
+        };
+      };
 
-  # Home Manager overrides
-  home-manager.users.samy.wayland.windowManager.hyprland.settings = {
-    exec = [
-      # Fix backlight
-      "sudo chmod a+rw /sys/class/backlight/amdgpu_bl1/brightness"
-      # Update charging status
-      "sudo systemctl start charger"
-    ];
+      systemd.services."charger" = {
+        description = "Run commands based on charging status - gets called by udev rules & on hyprland load/reload.";
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = pkgs.writeShellScript "charger-handler" ''
+            # Set env variables to access user stuff
+            export XDG_RUNTIME_DIR="/run/user/1000"
+            export WAYLAND_DISPLAY="wayland-1"
+            export HYPRLAND_INSTANCE_SIGNATURE=$(ls "$XDG_RUNTIME_DIR/hypr/")
 
-    monitor = [
-      # Also update this in the systemd charger service.
-      "eDP-1, 2880x1920@120, auto, auto"
-    ];
-  };
+            charging=$(cat /sys/class/power_supply/ACAD/online)
 
-  systemd.services."charger" = {
-    description = "Run commands based on charging status - gets called by udev rules & on hyprland load/reload.";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = pkgs.writeShellScript "charger-handler" ''
-        # Set env variables to access user stuff
-        export XDG_RUNTIME_DIR="/run/user/1000"
-        export WAYLAND_DISPLAY="wayland-1"
-        export HYPRLAND_INSTANCE_SIGNATURE=$(ls "$XDG_RUNTIME_DIR/hypr/")
+            if [ "$charging" = "1" ]; then
+              ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@120, auto, auto"
+              ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 1
+              ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 1
+            else
+              ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@60, auto, auto"
+              ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 0
+              ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 0
+            fi
+          '';
+        };
+      };
 
-        charging=$(cat /sys/class/power_supply/ACAD/online)
-
-        if [ "$charging" = "1" ]; then
-          ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@120, auto, auto"
-          ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 1
-          ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 1
-        else
-          ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@60, auto, auto"
-          ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 0
-          ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 0
-        fi
+      services.udev.extraRules = ''
+        SUBSYSTEM=="power_supply", KERNEL=="ACAD", \
+          ENV{POWER_SUPPLY_ONLINE}=="0", \
+          RUN+="${pkgs.systemd}/bin/systemctl --no-block start charger.service"
+        SUBSYSTEM=="power_supply", KERNEL=="ACAD", \
+          ENV{POWER_SUPPLY_ONLINE}=="1", \
+          RUN+="${pkgs.systemd}/bin/systemctl --no-block start charger.service"
       '';
-    };
-  };
 
-  services.udev.extraRules = ''
-    SUBSYSTEM=="power_supply", KERNEL=="ACAD", \
-      ENV{POWER_SUPPLY_ONLINE}=="0", \
-      RUN+="${pkgs.systemd}/bin/systemctl --no-block start charger.service"
-    SUBSYSTEM=="power_supply", KERNEL=="ACAD", \
-      ENV{POWER_SUPPLY_ONLINE}=="1", \
-      RUN+="${pkgs.systemd}/bin/systemctl --no-block start charger.service"
-  '';
-
-  # Version of first install
-  home-manager.users.samy.home.stateVersion = "24.11";
-  system.stateVersion = "24.11";
+      # Version of first install
+      system.stateVersion = "24.11";
+    }
+  ];
 }

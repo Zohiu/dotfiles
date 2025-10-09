@@ -3,9 +3,7 @@
   pkgs,
   pkgs-stable,
   inputs,
-  hyprland,
-  nix-flatpak,
-  catppuccin,
+  globals,
   ...
 }:
 
@@ -34,17 +32,13 @@
   # Home manager
   home-manager.extraSpecialArgs = { inherit inputs; };
   home-manager.useUserPackages = true;
-  home-manager.users.samy = {
+  home-manager.users.${globals.user} = {
     imports = [
-      hyprland.homeManagerModules.default
-      nix-flatpak.homeManagerModules.nix-flatpak
+      inputs.hyprland.homeManagerModules.default
+      inputs.nix-flatpak.homeManagerModules.nix-flatpak
       ../../home
     ];
   };
-  
-  # Theme
-  catppuccin.flavor = "mocha";
-  catppuccin.enable = true;
 
   # Locale options
   time.timeZone = "Europe/Berlin";
@@ -114,15 +108,15 @@
   services.syncthing = {
     enable = true;
     openDefaultPorts = true;
-    user = "samy";
+    user = "${globals.user}";
     group = "users";
-    dataDir = "/home/samy";
-    configDir = "/home/samy/.config/syncthing";
+    dataDir = "/home/${globals.user}";
+    configDir = "/home/${globals.user}/.config/syncthing";
   };
 
-  users.users.samy = {
+  users.users.${globals.user} = {
     isNormalUser = true;
-    description = "Samy";
+    description = "${globals.user}";
     extraGroups = [
       "networkmanager"
       "wheel"
