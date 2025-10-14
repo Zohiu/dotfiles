@@ -144,30 +144,42 @@ inputs.nixpkgs.lib.nixosSystem rec {
         };
       };
 
-      systemd.services."charger" = {
-        description = "Run commands based on charging status - gets called by udev rules & on hyprland load/reload.";
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = pkgs.writeShellScript "charger-handler" ''
-            # Set env variables to access user stuff
-            export XDG_RUNTIME_DIR="/run/user/1000"
-            export WAYLAND_DISPLAY="wayland-1"
-            export HYPRLAND_INSTANCE_SIGNATURE=$(ls "$XDG_RUNTIME_DIR/hypr/")
+systemd.services."charger" = {
+  description = "Adjust Hyprland settings based on AC power status";
+  serviceConfig = {
+    Type = "oneshot";
+    ExecStart = pkgs.writeShellScript "charger-handler" ''
+      charging=$(cat /sys/class/power_supply/ACAD/online 2>/dev/null || echo 0)
 
-            charging=$(cat /sys/class/power_supply/ACAD/online)
+      ${pkgs.util-linux}/bin/runuser -u ${globals.user} -- ${pkgs.bash}/bin/bash -c '
+        export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+        export WAYLAND_DISPLAY="wayland-1"
 
-            if [ "$charging" = "1" ]; then
-              ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@120, auto, auto"
-              ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 1
-              ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 1
-            else
-              ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@60, auto, auto"
-              ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 0
-              ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 0
-            fi
-          '';
-        };
-      };
+        # Find the directory that actually contains a Hyprland socket
+        instance=$(find "$XDG_RUNTIME_DIR/hypr" -type s -name ".socket.sock" -printf "%h\n" 2>/dev/null | head -n1)
+
+        if [ -z "$instance" ]; then
+          echo "No active Hyprland socket found" >&2
+          exit 1
+        fi
+
+        export HYPRLAND_INSTANCE_SIGNATURE=$(basename "$instance")
+        echo "Using Hyprland instance: $HYPRLAND_INSTANCE_SIGNATURE"
+
+        if [ "$charging" = "1" ]; then
+          ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@120, auto, auto"
+          ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 1
+          ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 1
+        else
+          ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@60, auto, auto"
+          ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 0
+          ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 0
+        fi
+      '
+    '';
+  };
+};
+
 
       services.udev.extraRules = ''
         SUBSYSTEM=="power_supply", KERNEL=="ACAD", \

@@ -54,6 +54,7 @@ in
     "org.jdownloader.JDownloader"
     "org.vinegarhq.Sober"
     "io.github.betaflight.BetaflightConfigurator"
+    "com.ultimaker.cura"
 
     { appId = "com.brave.Browser"; origin = "flathub";  }
   ];
