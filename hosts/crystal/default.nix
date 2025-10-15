@@ -1,12 +1,17 @@
-{ inputs, globals, ... }:
-let 
+{
+  flake,
+  inputs,
+  globals,
+  ...
+}:
+let
   system = "x86_64-linux";
   pkgs = import inputs.nixpkgs { system = system; };
   pkgs-stable = import inputs.nixpkgs-stable { system = system; };
 in
 inputs.nixpkgs.lib.nixosSystem rec {
   specialArgs = {
-    inherit inputs globals;
+    inherit flake inputs globals;
   };
 
   modules = [
@@ -18,9 +23,14 @@ inputs.nixpkgs.lib.nixosSystem rec {
 
     ./hardware.nix
     ./filesystems.nix
-    ./vr.nix
-    ../common
-    ../amd.nix
+
+    "${flake}"
+    "${flake}/modules/hardware/graphics/amd.nix"
+
+    "${flake}/modules/desktop"
+    "${flake}/modules/hardware/device-support"
+    "${flake}/modules/networking"
+    "${flake}/modules/programs"
     {
       networking.hostName = "crystal";
 
@@ -39,27 +49,6 @@ inputs.nixpkgs.lib.nixosSystem rec {
           };
         };
       };
-
-      # Desktop streaming
-      services.sunshine = {
-        enable = true;
-        autoStart = true;
-        capSysAdmin = true;
-        openFirewall = true;
-      };
-
-      programs.envision = {
-        enable = true;
-        openFirewall = true; # This is set true by default
-      };
-
-      programs.corectrl.enable = true;
-
-      # Program overrides
-      home-manager.users.${globals.user}.home.packages = [
-        pkgs.bs-manager
-        pkgs.alsa-scarlett-gui
-      ];
 
       # Sample rate
       services.pipewire.extraConfig = {
@@ -85,24 +74,18 @@ inputs.nixpkgs.lib.nixosSystem rec {
       };
 
       # Hyprland overrides
-      home-manager.users.${globals.user}.wayland.windowManager.hyprland.settings = {
-        monitor = [
-          "HDMI-A-1, 1920x1080@60, 0x1080, auto"
-          "DP-1, 2560x1440@120, 1920x720, auto"
-          "DP-2, 1920x1080@60, 4480x1080, auto"
+      home-manager.users.${globals.user} = {
+        home.stateVersion = "25.05";
 
-          # "DP-3, 1920x1080@60, 4480x0, auto"
-        ];
-
-        env = [
-          # Allow 2 gpus
-          #"AQ_DRM_DEVICES,/dev/dri/card2:/dev/dri/card1"
-          #"WLR_DRM_DEVICES,/dev/dri/card2:/dev/dri/card1"
-        ];
+        wayland.windowManager.hyprland.settings = {
+          monitor = [
+            "HDMI-A-1, 1920x1080@60, 0x1080, auto"
+            "DP-1, 2560x1440@120, 1920x720, auto"
+            "DP-2, 1920x1080@60, 4480x1080, auto"
+          ];
+        };
       };
 
-      # Version of first install
-      home-manager.users.${globals.user}.home.stateVersion = "25.05";
       system.stateVersion = "25.05";
     }
   ];

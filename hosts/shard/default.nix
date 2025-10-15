@@ -1,5 +1,5 @@
 { inputs, globals, ... }:
-let 
+let
   system = "x86_64-linux";
   pkgs = import inputs.nixpkgs { system = system; };
   pkgs-stable = import inputs.nixpkgs-stable { system = system; };
@@ -18,8 +18,14 @@ inputs.nixpkgs.lib.nixosSystem rec {
     inputs.lsfg-vk-flake.nixosModules.default
 
     ./hardware.nix
-    ../common
-    ../amd.nix
+
+    "${flake}"
+    "${flake}/modules/hardware/graphics/amd.nix"
+
+    "${flake}/modules/desktop"
+    "${flake}/modules/hardware/device-support"
+    "${flake}/modules/networking"
+    "${flake}/modules/programs"
     {
       networking.hostName = "shard";
 
@@ -33,7 +39,8 @@ inputs.nixpkgs.lib.nixosSystem rec {
 
       # Ignore the power key
       services.logind.settings.Login = {
-        HandlePowerKey = "ignore";    HandleSuspendKey = "ignore";
+        HandlePowerKey = "ignore";
+        HandleSuspendKey = "ignore";
         HandleHibernateKey = "ignore";
       };
 
@@ -50,56 +57,56 @@ inputs.nixpkgs.lib.nixosSystem rec {
       services.tlp = {
         enable = true;
         settings = {
-          DISK_IDLE_SECS_ON_AC=0;
-          DISK_IDLE_SECS_ON_BAT=2;
+          DISK_IDLE_SECS_ON_AC = 0;
+          DISK_IDLE_SECS_ON_BAT = 2;
 
-          MAX_LOST_WORK_SECS_ON_AC=15;
-          MAX_LOST_WORK_SECS_ON_BAT=60;
+          MAX_LOST_WORK_SECS_ON_AC = 15;
+          MAX_LOST_WORK_SECS_ON_BAT = 60;
 
           CPU_SCALING_GOVERNOR_ON_AC = "performance";
           CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
 
-          CPU_HWP_ON_AC="balance_performance";
-          CPU_HWP_ON_BAT="balance_power";
+          CPU_HWP_ON_AC = "balance_performance";
+          CPU_HWP_ON_BAT = "balance_power";
 
-          SCHED_POWERSAVE_ON_AC=0;
-          SCHED_POWERSAVE_ON_BAT=1;
+          SCHED_POWERSAVE_ON_AC = 0;
+          SCHED_POWERSAVE_ON_BAT = 1;
 
-          NMI_WATCHDOG=0;
+          NMI_WATCHDOG = 0;
 
-          ENERGY_PERF_POLICY_ON_AC="performance";
-          ENERGY_PERF_POLICY_ON_BAT="powersave";
+          ENERGY_PERF_POLICY_ON_AC = "performance";
+          ENERGY_PERF_POLICY_ON_BAT = "powersave";
 
-          PCIE_ASPM_ON_AC="performance";
-          PCIE_ASPM_ON_BAT="powersave";
+          PCIE_ASPM_ON_AC = "performance";
+          PCIE_ASPM_ON_BAT = "powersave";
 
-          RADEON_POWER_PROFILE_ON_AC="high";
-          RADEON_POWER_PROFILE_ON_BAT="low";
+          RADEON_POWER_PROFILE_ON_AC = "high";
+          RADEON_POWER_PROFILE_ON_BAT = "low";
 
-          RADEON_DPM_STATE_ON_AC="performance";
-          RADEON_DPM_STATE_ON_BAT="battery";
+          RADEON_DPM_STATE_ON_AC = "performance";
+          RADEON_DPM_STATE_ON_BAT = "battery";
 
-          RADEON_DPM_PERF_LEVEL_ON_AC="auto";
-          RADEON_DPM_PERF_LEVEL_ON_BAT="low";
+          RADEON_DPM_PERF_LEVEL_ON_AC = "auto";
+          RADEON_DPM_PERF_LEVEL_ON_BAT = "low";
 
           # Wifi power saving
           #WIFI_PWR_ON_AC="off";
           #WIFI_PWR_ON_BAT="on";
           #WOL_DISABLE="Y";
 
-          SOUND_POWER_SAVE_ON_AC=0;
-          SOUND_POWER_SAVE_ON_BAT=1;
-          SOUND_POWER_SAVE_CONTROLLER="Y";
+          SOUND_POWER_SAVE_ON_AC = 0;
+          SOUND_POWER_SAVE_ON_BAT = 1;
+          SOUND_POWER_SAVE_CONTROLLER = "Y";
 
-          RUNTIME_PM_ON_AC="on";
-          RUNTIME_PM_ON_BAT="auto";
+          RUNTIME_PM_ON_AC = "on";
+          RUNTIME_PM_ON_BAT = "auto";
 
-          USB_AUTOSUSPEND=1;
+          USB_AUTOSUSPEND = 1;
 
           # Autosuspend: 0=do not exclude, 1=exclude
-          USB_BLACKLIST_BTUSB=0;
-          USB_BLACKLIST_PHONE=0;
-          USB_BLACKLIST_WWAN=1;
+          USB_BLACKLIST_BTUSB = 0;
+          USB_BLACKLIST_PHONE = 0;
+          USB_BLACKLIST_WWAN = 1;
 
           START_CHARGE_THRESH_BAT0 = 90;
           STOP_CHARGE_THRESH_BAT0 = 97;
@@ -110,11 +117,11 @@ inputs.nixpkgs.lib.nixosSystem rec {
       };
 
       boot.kernelParams = [
-        "radeon.dpm=1"  # needed for tlp RADEON_DPM_STATE
+        "radeon.dpm=1" # needed for tlp RADEON_DPM_STATE
 
         # Tickless / scheduler tuning
-        "nohz_full=1-12"          # Replace N with your last CPU (exclude CPU0)
-        "rcu_nocbs=1-12"          # Offload RCU callbacks from isolated CPUs
+        "nohz_full=1-12" # Replace N with your last CPU (exclude CPU0)
+        "rcu_nocbs=1-12" # Offload RCU callbacks from isolated CPUs
         # AMD GPU power management
         "amdgpu.dc=1"
         "amdgpu.deep_color=1"
@@ -144,42 +151,41 @@ inputs.nixpkgs.lib.nixosSystem rec {
         };
       };
 
-systemd.services."charger" = {
-  description = "Adjust Hyprland settings based on AC power status";
-  serviceConfig = {
-    Type = "oneshot";
-    ExecStart = pkgs.writeShellScript "charger-handler" ''
-      charging=$(cat /sys/class/power_supply/ACAD/online 2>/dev/null || echo 0)
+      systemd.services."charger" = {
+        description = "Adjust Hyprland settings based on AC power status";
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = pkgs.writeShellScript "charger-handler" ''
+            charging=$(cat /sys/class/power_supply/ACAD/online 2>/dev/null || echo 0)
 
-      ${pkgs.util-linux}/bin/runuser -u ${globals.user} -- ${pkgs.bash}/bin/bash -c '
-        export XDG_RUNTIME_DIR="/run/user/$(id -u)"
-        export WAYLAND_DISPLAY="wayland-1"
+            ${pkgs.util-linux}/bin/runuser -u ${globals.user} -- ${pkgs.bash}/bin/bash -c '
+              export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+              export WAYLAND_DISPLAY="wayland-1"
 
-        # Find the directory that actually contains a Hyprland socket
-        instance=$(find "$XDG_RUNTIME_DIR/hypr" -type s -name ".socket.sock" -printf "%h\n" 2>/dev/null | head -n1)
+              # Find the directory that actually contains a Hyprland socket
+              instance=$(find "$XDG_RUNTIME_DIR/hypr" -type s -name ".socket.sock" -printf "%h\n" 2>/dev/null | head -n1)
 
-        if [ -z "$instance" ]; then
-          echo "No active Hyprland socket found" >&2
-          exit 1
-        fi
+              if [ -z "$instance" ]; then
+                echo "No active Hyprland socket found" >&2
+                exit 1
+              fi
 
-        export HYPRLAND_INSTANCE_SIGNATURE=$(basename "$instance")
-        echo "Using Hyprland instance: $HYPRLAND_INSTANCE_SIGNATURE"
+              export HYPRLAND_INSTANCE_SIGNATURE=$(basename "$instance")
+              echo "Using Hyprland instance: $HYPRLAND_INSTANCE_SIGNATURE"
 
-        if [ "$charging" = "1" ]; then
-          ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@120, auto, auto"
-          ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 1
-          ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 1
-        else
-          ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@60, auto, auto"
-          ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 0
-          ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 0
-        fi
-      '
-    '';
-  };
-};
-
+              if [ "$charging" = "1" ]; then
+                ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@120, auto, auto"
+                ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 1
+                ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 1
+              else
+                ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1, 2880x1920@60, auto, auto"
+                ${pkgs.hyprland}/bin/hyprctl keyword animations:enabled 0
+                ${pkgs.hyprland}/bin/hyprctl keyword decoration:blur:enabled 0
+              fi
+            '
+          '';
+        };
+      };
 
       services.udev.extraRules = ''
         SUBSYSTEM=="power_supply", KERNEL=="ACAD", \
