@@ -22,16 +22,16 @@
     device = "/dev/disk/by-path/ip-192.168.68.76:3260-iscsi-iqn.2005-10.org.freenas.ctl:steam-lun-0-part1";
     fsType = "btrfs";
     options = [
-        "rw"
-        "noauto"
-        "nofail"
-        "users"
-        "suid"
-        "exec"
-        "noatime"
-        "nodiratime"
-        # "x-systemd.automount"
-        "_netdev"
+      "rw"
+      "noauto"
+      "nofail"
+      "users"
+      "suid"
+      "exec"
+      "noatime"
+      "nodiratime"
+      # "x-systemd.automount"
+      "_netdev"
     ];
     neededForBoot = false;
   };

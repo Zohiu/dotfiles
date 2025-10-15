@@ -28,10 +28,6 @@
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
     };
-    hypr-dynamic-cursors = {
-      url = "github:VirtCode/hypr-dynamic-cursors";
-      inputs.hyprland.follows = "hyprland";
-    };
 
     # Framework stuff
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -44,91 +40,26 @@
     lsfg-vk-flake.url = "github:pabloaul/lsfg-vk-flake/main";
     lsfg-vk-flake.inputs.nixpkgs.follows = "nixpkgs";
 
-    #
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      nixpkgs-stable,
-      nixpkgs-xr,
-      home-manager,
-      nix-flatpak,
-      catppuccin,
-      hyprland,
-      split-monitor-workspaces,
-      nixos-hardware,
-      fw-fanctrl,
-      lsfg-vk-flake,
-      nix-index-database,
-      ...
-    }@inputs:
+    { self, ... }@inputs:
     let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { system = system; };
-      pkgs-stable = import nixpkgs-stable { system = system; };
+      globals = {
+        user = "samy";
+        install-dir = "~/dotfiles"; # No trailing slash!
+      };
+      flake = self;
     in
-    {
+    rec {
+      formatter.x86_64-linux = inputs.nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
+
       nixosConfigurations = {
-        crystal = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            inherit home-manager;
-            inherit hyprland;
-            inherit nix-flatpak;
-            inherit catppuccin;
-            inherit pkgs-stable;
-          };
-          modules = [
-            nixpkgs-xr.nixosModules.nixpkgs-xr
-            catppuccin.nixosModules.catppuccin
-            nix-index-database.nixosModules.nix-index
-            home-manager.nixosModules.home-manager
-            ./hosts/crystal
-            lsfg-vk-flake.nixosModules.default
-          ];
-        };
-
-        shard = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            inherit home-manager;
-            inherit hyprland;
-            inherit nix-flatpak;
-            inherit catppuccin;
-            inherit pkgs-stable;
-          };
-          modules = [
-            nixos-hardware.nixosModules.framework-13-7040-amd
-            fw-fanctrl.nixosModules.default
-            catppuccin.nixosModules.catppuccin
-            nix-index-database.nixosModules.nix-index
-            home-manager.nixosModules.home-manager
-            ./hosts/shard
-            lsfg-vk-flake.nixosModules.default
-          ];
-        };
-
-        tv = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            inherit home-manager;
-            inherit hyprland;
-            inherit nix-flatpak;
-            inherit catppuccin;
-            inherit pkgs-stable;
-          };
-          modules = [
-            catppuccin.nixosModules.catppuccin
-            nix-index-database.nixosModules.nix-index
-            home-manager.nixosModules.home-manager
-            ./hosts/tv
-            lsfg-vk-flake.nixosModules.default
-          ];
-        };
+        crystal = import ./hosts/crystal { inherit flake inputs globals; };
+        shard = import ./hosts/shard { inherit flake inputs globals; };
+        tv = import ./hosts/tv { inherit flake inputs globals; };
       };
     };
 }
