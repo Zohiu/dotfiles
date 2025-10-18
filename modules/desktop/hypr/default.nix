@@ -24,7 +24,6 @@
           "hyprctl setcursor Bibata-Modern-Classic 24"
           "dunst"
           "easyeffects --gapplication-service"
-          "wl-paste -t text --watch clipman store --no-persist"
           "systemctl --user start hyprpolkitagent"
           "hyprpaper"
           "udiskie --automount --notify"
