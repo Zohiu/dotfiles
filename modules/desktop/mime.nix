@@ -1,6 +1,5 @@
 { globals, ... }:
 let
-  # === Audio MIME types ===
   audioMimes = [
     # Common formats
     "audio/mpeg" # .mp3
@@ -57,7 +56,6 @@ let
     "audio/3gpp2" # .3g2
   ];
 
-  # === Video MIME types ===
   videoMimes = [
     # Common formats
     "video/mp4" # .mp4
@@ -94,7 +92,6 @@ let
     "video/vnd.radgamettools.bink" # .bik
   ];
 
-  # === Image MIME types ===
   imageMimes = [
     # Common formats
     "image/png" # .png
@@ -121,7 +118,6 @@ let
     "image/x-xbitmap" # .xbm
   ];
 
-  # === Archive / Compressed files ===
   archiveMimes = [
     "application/zip" # .zip
     "application/x-tar" # .tar
@@ -134,7 +130,6 @@ let
     "application/x-xz" # .xz
   ];
 
-  # === Text ===
   textMimes = [
     "text/plain" # .txt
     "text/x-python" # .py
@@ -151,7 +146,6 @@ let
     "text/csv" # .csv
   ];
 
-  # === LibreOffice MIME types ===
   excelMimes = [
     "application/vnd.ms-excel" # .xls
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" # .xlsx
@@ -237,4 +231,7 @@ in
 
   # To check for desktop file names:
   # /etc/profiles/per-user/samy/share/applications/
+
+  # Debugging:
+  # XDG_UTILS_DEBUG_LEVEL=2 xdg-mime query default text/plain
 }
