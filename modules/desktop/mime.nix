@@ -191,7 +191,7 @@ let
 
   # Generate defaults
   audioVideoDefaults = makeDefaults (audioMimes ++ videoMimes) "mpv.desktop";
-  imageDefaults      = makeDefaults imageMimes      "gwenview.desktop";
+  imageDefaults      = makeDefaults imageMimes      "com.interversehq.qView.desktop";
   archiveDefauls     = makeDefaults archiveMimes    "org.kde.ark.desktop";
   textDefaults       = makeDefaults textMimes       "org.kde.kate.desktop";
   excelDefaults      = makeDefaults excelMimes      "libreoffice-calc.desktop";
