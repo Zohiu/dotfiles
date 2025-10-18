@@ -206,7 +206,6 @@ let
     "application/vnd.adobe.illustrator" = [ "inkscape.desktop" ]; # .ai
   }
   // audioVideoDefaults
-  // videoDefaults
   // imageDefaults
   // textDefaults
   // excelDefaults
