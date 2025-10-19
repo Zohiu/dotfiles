@@ -21,8 +21,19 @@ in
       vulkan-validation-layers
       amdvlk
       mesa.opencl
+      rocmPackages.clr
       rocmPackages.clr.icd
     ];
+  };
+
+  environment.systemPackages = with pkgs; [
+    rocmPackages.rocminfo
+    rocmPackages.rocm-smi
+  ];
+
+  nixpkgs.config = {
+    # Enable ROCm support in packages
+    rocmSupport = true;
   };
 
   # To see if it works:
