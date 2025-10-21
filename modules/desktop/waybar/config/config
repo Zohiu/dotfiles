@@ -60,7 +60,7 @@
         "default": [
           "",
           "",
-          ""
+          " "
         ]
       },
       "format-muted": "󰖁 Muted",
