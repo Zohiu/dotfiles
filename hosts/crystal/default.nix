@@ -28,7 +28,9 @@ inputs.nixpkgs.lib.nixosSystem rec {
     "${flake}/modules/hardware/graphics/amd.nix"
 
     "${flake}/modules/desktop"
-    "${flake}/modules/hardware/device-support"
+    "${flake}/modules/hardware/device-support/drawing-tablet.nix"
+    "${flake}/modules/hardware/device-support/3d-printing.nix"
+    "${flake}/modules/hardware/device-support/printing.nix"
     "${flake}/modules/networking"
     "${flake}/modules/programs"
     {

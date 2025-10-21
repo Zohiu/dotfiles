@@ -2,11 +2,14 @@
   config,
   pkgs,
   pkgs-stable,
+  inputs,
   ...
 }:
 {
   # Overlays to use mesa instead of amdvlk when both are installed.
   nixpkgs.overlays = [
+    inputs.nixpkgs-xr.overlays.default
+
     (final: prev: {
       wivrn = prev.wivrn.overrideAttrs (prevAttrs: {
         nativeBuildInputs = (prevAttrs.nativeBuildInputs or [ ]) ++ [ prev.makeBinaryWrapper ];
