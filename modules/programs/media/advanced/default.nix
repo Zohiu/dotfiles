@@ -21,6 +21,7 @@ in
         bitwig-studio
         davinci-resolve
         inkscape
+        orca-slicer
       ]
     );
   };

@@ -29,6 +29,9 @@ in
         ffmpeg-full
         n-m3u8dl-re
         qbittorrent
+
+        # Streaming
+        grayjay
       ]
     );
   };

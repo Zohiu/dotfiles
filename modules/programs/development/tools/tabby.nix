@@ -12,7 +12,7 @@ in
     wantedBy = [ "default.target" ];
     serviceConfig = {
       WorkingDirectory = "/home/${globals.user}/.tabby";
-      StateDirectory = "tabby";        # systemd will create ~/.local/state/tabby
+      StateDirectory = "tabby"; # systemd will create ~/.local/state/tabby
       ConfigurationDirectory = "tabby"; # systemd will create ~/.config/tabby
       Environment = ''
         LOCALE_ARCHIVE=${pkgs.glibcLocales}/lib/locale/locale-archive
