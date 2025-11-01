@@ -15,9 +15,9 @@ inputs.nixpkgs.lib.nixosSystem rec {
   };
 
   modules = [
-    catppuccin.nixosModules.catppuccin
-    nix-index-database.nixosModules.nix-index
-    home-manager.nixosModules.home-manager
+    inputs.catppuccin.nixosModules.catppuccin
+    inputs.nix-index-database.nixosModules.nix-index
+    inputs.home-manager.nixosModules.home-manager
 
     ./hardware.nix
 
