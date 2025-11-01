@@ -18,6 +18,7 @@ inputs.nixpkgs.lib.nixosSystem rec {
     inputs.catppuccin.nixosModules.catppuccin
     inputs.nix-index-database.nixosModules.nix-index
     inputs.home-manager.nixosModules.home-manager
+    inputs.lsfg-vk-flake.nixosModules.default
 
     ./hardware.nix
 
