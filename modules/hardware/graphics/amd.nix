@@ -19,7 +19,6 @@ in
       libvdpau-va-gl
       vulkan-loader
       vulkan-validation-layers
-      amdvlk
       mesa.opencl
       rocmPackages.clr
       rocmPackages.clr.icd

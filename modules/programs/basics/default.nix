@@ -28,7 +28,7 @@ in
 
     # GPG
     home.file.".gnupg/gpg-agent.conf".text = ''
-      pinentry-program ${pkgs.pinentry}/bin/pinentry
+      pinentry-program ${pkgs.pinentry-gnome3}/bin/pinentry
     '';
   };
 
