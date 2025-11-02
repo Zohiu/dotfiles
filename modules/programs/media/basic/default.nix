@@ -14,6 +14,7 @@ in
   home-manager.users.${globals.user} = {
     services.flatpak.packages = [
       "org.jdownloader.JDownloader"
+      "app.grayjay.Grayjay"
     ];
 
     home.packages = (
@@ -31,7 +32,7 @@ in
         qbittorrent
 
         # Streaming
-        grayjay
+        # grayjay
       ]
     );
   };

@@ -131,15 +131,22 @@
         ];
 
         windowrulev2 = [
-          "tile,class:^(Godot)$"
-          "float,title:\\(DEBUG\\)$"
-          "center,title:\\(DEBUG\\)$"
-          "size 900 600,title:\\(DEBUG\\)$"
-
+          # Fix jetbrains context menus
           "noinitialfocus, class:(jetbrains-)(.*), floating:1"
-
+            
+          # Pavucontrol
           "float,class:org.pulseaudio.pavucontrol"
           "size 800 600,class:org.pulseaudio.pavucontrol"
+          "workspace unset,class:org.pulseaudio.pavucontrol"
+          
+          # Nemo file manager properties window
+          "float,class:(nemo),title:(.*Properties)$"
+          
+          # Grayjay
+          "tile,title:^(Grayjay)$"
+        
+          # fix pinentry losing focus
+          "stayfocused, class:^(pinentry-)"
         ];
 
         "$mainMod" = "SUPER";
@@ -151,7 +158,7 @@
           "$mainMod, M, exit"
           "$mainMod, X, exec, rofi -show power-menu -modi power-menu:rofi-power-menu"
           "$mainMod, I, exec, rofi-main-menu"
-          "$mainMod, E, exec, dolphin"
+          "$mainMod, E, exec, nemo"
           "$mainMod, SPACE, togglefloating"
           "$mainMod, d, exec, rofi -theme theme -show drun"
           "$mainMod, J, togglesplit"
@@ -301,7 +308,7 @@
         dracula-qt5-theme
         dracula-theme
       ];
-      platformTheme.name = "qtct";
+      platformTheme.name = "hyprqt6engine";
       kde.settings.kdeglobals.General.TerminalApplication = "kitty";
       kde.settings.kdeglobals.Icons.Theme = "Papirus-Dark";
       kde.settings.kdeglobals.UiSettings.ColorScheme = "qt6ct";

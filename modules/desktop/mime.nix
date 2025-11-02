@@ -186,15 +186,15 @@ let
   # Generate defaults
   audioVideoDefaults = makeDefaults (audioMimes ++ videoMimes) "mpv.desktop";
   imageDefaults = makeDefaults imageMimes "com.interversehq.qView.desktop";
-  archiveDefauls = makeDefaults archiveMimes "org.kde.ark.desktop";
-  textDefaults = makeDefaults textMimes "org.kde.kate.desktop";
+  archiveDefauls = makeDefaults archiveMimes "org.gnome.FileRoller.desktop";
+  textDefaults = makeDefaults textMimes "pluma.desktop";
   excelDefaults = makeDefaults excelMimes "libreoffice-calc.desktop";
   wordDefaults = makeDefaults wordMimes "libreoffice-writer.desktop";
   powerpointDefaults = makeDefaults powerpointMimes "libreoffice-impress.desktop";
   godotDefaults = makeDefaults godotMimes "godot.desktop";
 
   defaults = {
-    "inode/directory" = [ "org.kde.dolphin.desktop" ];
+    "inode/directory" = [ "nemo.desktop" ];
     "text/html" = [ "firefox.desktop" ];
     "application/pdf" = [ "firefox.desktop" ]; # .pdf
     "application/vnd.unity" = [ "unity.desktop" ]; # .unity, .unitypackage

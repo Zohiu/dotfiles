@@ -24,21 +24,37 @@
         discord
         signal-desktop
 
-        # KDE stuff
-        kdePackages.dolphin
-        kdePackages.ark
-        kdePackages.kate
-        kdePackages.kservice
-        kdePackages.kimageformats
-        kdePackages.kdegraphics-thumbnailers
-        kdePackages.ffmpegthumbs
-        kdePackages.qtimageformats
+        nemo-with-extensions
+        nemo-preview
+        nemo-fileroller
+        nemo-seahorse
+
+        file-roller
+        mate.pluma
 
         # Admin tools / Other
         qpwgraph
         gparted
       ]
     );
+
+    dconf = {
+      settings = {
+        "org/cinnamon/desktop/applications/terminal" = {
+          exec = "kitty";
+        };
+      };
+    };
+
+    xdg.configFile."gtk-3.0/bookmarks".text = ''
+      file:///home/${globals.user}/dotfiles Dotfiles
+      file:///home/${globals.user}/Downloads Downloads
+      file:///home/${globals.user}/Development Development
+      file:///home/${globals.user}/Documents Documents
+      file:///home/${globals.user}/Pictures Pictures
+      file:///home/${globals.user}/Videos Videos
+      file:///home/${globals.user}/Music Music
+    '';
 
     programs.thunderbird = {
       enable = true;
