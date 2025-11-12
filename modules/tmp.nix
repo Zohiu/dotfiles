@@ -9,6 +9,8 @@
   ...
 }:
 {
+  services.teamviewer.enable = true;
+
   home-manager.users.${globals.user} = {
     services.flatpak.packages = [
 

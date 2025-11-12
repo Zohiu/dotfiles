@@ -33,6 +33,8 @@ inputs.nixpkgs.lib.nixosSystem rec {
     "${flake}/modules/hardware/device-support/printing.nix"
     "${flake}/modules/networking"
     "${flake}/modules/programs"
+    "${flake}/modules/tmp.nix"
+
     {
       networking.hostName = "crystal";
 

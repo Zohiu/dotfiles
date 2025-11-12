@@ -32,6 +32,7 @@ in
 
         # Modding
         r2modman
+        satisfactorymodmanager
       ]
     );
   };
