@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, globals, ... }:
 
 {
   services.samba.enable = true;
@@ -38,11 +38,25 @@
         in
         [ "${automountOpts},credentials=/home/samy/.truenas-secrets" ];
     };
+    
+    "/mnt/h0" = {
+      device = "root@h0:/";  # remote path root@h0
+      fsType = "fuse.sshfs";
+      options = [
+        "allow_other"
+        "IdentityFile=/home/${globals.user}/.ssh/id_ed25519"
+        "reconnect"
+        "ServerAliveInterval=15"
+        "ServerAliveCountMax=3"
+        "StrictHostKeyChecking=no"
+        "UserKnownHostsFile=/home/${globals.user}/.ssh/known_hosts"
+      ];
+    };
   };
 
   # Automount all removable devices as sync
   services.udisks2.enable = true;
-  environment.systemPackages = with pkgs; [ udiskie ];
+  environment.systemPackages = with pkgs; [ udiskie sshfs ];
   systemd.tmpfiles.rules = [ "d /media 0755 root root -" ];
   services.udev.extraRules = ''
     ACTION=="add|change", KERNEL=="sd[a-z][0-9]", ATTRS{removable}=="1", ENV{UDISKS_FILESYSTEM_SHARED}="1", ENV{UDISKS_MOUNT_OPTIONS_DEFAULTS}="sync"

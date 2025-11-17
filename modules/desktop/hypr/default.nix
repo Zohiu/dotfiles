@@ -133,18 +133,18 @@
         windowrulev2 = [
           # Fix jetbrains context menus
           "noinitialfocus, class:(jetbrains-)(.*), floating:1"
-            
+
           # Pavucontrol
           "float,class:org.pulseaudio.pavucontrol"
           "size 800 600,class:org.pulseaudio.pavucontrol"
           "workspace unset,class:org.pulseaudio.pavucontrol"
-          
+
           # Nemo file manager properties window
           "float,class:(nemo),title:(.*Properties)$"
-          
+
           # Grayjay
           "tile,title:^(Grayjay)$"
-        
+
           # fix pinentry losing focus
           "stayfocused, class:^(pinentry-)"
         ];

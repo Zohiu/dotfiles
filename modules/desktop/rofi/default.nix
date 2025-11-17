@@ -41,7 +41,7 @@ in
       source = ./config;
       recursive = true;
     };
-    
+
     # Disable the cache by making the file readonly.
     home.file.".cache/rofi-drun-desktop.cache".text = "";
   };
