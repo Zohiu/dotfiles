@@ -20,6 +20,10 @@ in
         direnv
         go
         sqlite
+        terraform
+        packer
+        kubectl
+        hcloud
       ]
     );
   };
