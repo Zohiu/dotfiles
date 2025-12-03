@@ -126,10 +126,6 @@
           };
         };
 
-        layerrule = [
-          "noanim,^(rofi)$"
-        ];
-
         windowrulev2 = [
           # Fix jetbrains context menus
           "noinitialfocus, class:(jetbrains-)(.*), floating:1"
