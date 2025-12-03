@@ -1,4 +1,8 @@
 { pkgs, globals, ... }:
 {
-  virtualisation.docker.rootless.enable = true;
+  virtualisation.docker = {
+    enable = true;
+  };
+
+  users.users.${globals.user}.extraGroups = [ "docker" ];
 }

@@ -8,9 +8,14 @@
 }:
 
 {
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = pkg: true;
+
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     useUserPackages = true;
+    useGlobalPkgs = true;
+
     users.${globals.user} = {
       imports = [
         inputs.hyprland.homeManagerModules.default

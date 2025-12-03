@@ -34,7 +34,6 @@ in
   environment.sessionVariables.PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
 
   # Additional packages
-  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     kdePackages.qtsvg
     kdePackages.kio-fuse

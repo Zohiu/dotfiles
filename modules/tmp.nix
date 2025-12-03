@@ -9,6 +9,13 @@
   ...
 }:
 {
+  # Temporary fix for an error that's out of my control.
+  nixpkgs.overlays = [
+    (self: super: {
+      wrapGAppsHook = super.wrapGAppsHook3;
+    })
+  ];
+
   services.teamviewer.enable = true;
 
   home-manager.users.${globals.user} = {
