@@ -8,7 +8,7 @@ let
   system = "x86_64-linux";
   pkgs = import inputs.nixpkgs { system = system; };
   pkgs-stable = import inputs.nixpkgs-stable { system = system; };
-  
+
   globals = flakeGlobals // {
     user = "samy";
   };
@@ -28,7 +28,7 @@ inputs.nixpkgs.lib.nixosSystem rec {
     ./hardware.nix
     ./filesystems.nix
 
-    "${flake}"
+    "${flake}/hosts/common.nix"
     "${flake}/modules/hardware/graphics/amd.nix"
 
     "${flake}/modules/desktop"

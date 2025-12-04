@@ -26,7 +26,7 @@ inputs.nixpkgs.lib.nixosSystem rec {
 
     ./hardware.nix
 
-    "${flake}"
+    "${flake}/hosts/common.nix"
     "${flake}/modules/hardware/graphics/amd.nix"
 
     "${flake}/modules/desktop"
