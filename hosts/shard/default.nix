@@ -1,17 +1,21 @@
 {
   flake,
   inputs,
-  globals,
+  flakeGlobals,
   ...
 }:
 let
   system = "x86_64-linux";
   pkgs = import inputs.nixpkgs { system = system; };
   pkgs-stable = import inputs.nixpkgs-stable { system = system; };
+
+  globals = flakeGlobals // {
+    user = "samy";
+  };
 in
 inputs.nixpkgs.lib.nixosSystem rec {
   specialArgs = {
-    inherit inputs globals;
+    inherit flake inputs globals;
   };
 
   modules = [

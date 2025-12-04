@@ -47,8 +47,7 @@
   outputs =
     { self, ... }@inputs:
     let
-      globals = {
-        user = "samy";
+      flakeGlobals = {
         install-dir = "~/dotfiles"; # No trailing slash!
       };
       flake = self;
@@ -57,9 +56,9 @@
       formatter.x86_64-linux = inputs.nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
 
       nixosConfigurations = {
-        crystal = import ./hosts/crystal { inherit flake inputs globals; };
-        shard = import ./hosts/shard { inherit flake inputs globals; };
-        tv = import ./hosts/tv { inherit flake inputs globals; };
+        crystal = import ./hosts/crystal { inherit flake inputs flakeGlobals; };
+        shard = import ./hosts/shard { inherit flake inputs flakeGlobals; };
+        tv = import ./hosts/tv { inherit flake inputs flakeGlobals; };
       };
     };
 }
