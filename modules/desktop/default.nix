@@ -6,12 +6,14 @@
   globals,
   ...
 }:
-let
-  allFiles = lib.filesystem.listFilesRecursive ./.;
-  nixFiles = builtins.filter (f: f != ./default.nix && lib.strings.hasSuffix ".nix" f) allFiles;
-in
 {
-  imports = nixFiles;
+  imports = [
+    ./hypr
+    ./mako
+    ./rofi
+    ./waybar
+    ./mime.nix
+  ];
 
   # Display Manager
   # services.xserver.enable = true;
@@ -24,7 +26,7 @@ in
   };
   programs.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
   };
   services.gnome.gnome-keyring.enable = true;
   programs.dconf.enable = true;

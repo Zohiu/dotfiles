@@ -1,8 +1,11 @@
 { lib, ... }:
-let
-  allFiles = lib.filesystem.listFilesRecursive ./.;
-  nixFiles = builtins.filter (f: f != ./default.nix && lib.strings.hasSuffix ".nix" f) allFiles;
-in
 {
-  imports = nixFiles;
+  imports = [
+    ./docker.nix
+    ./git.nix
+    ./godot.nix
+    ./jetbrains.nix
+    ./tabby.nix
+    ./vscodium.nix
+  ];
 }
